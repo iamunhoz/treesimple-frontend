@@ -1,12 +1,12 @@
-const inputPhrase = document.getElementsByClassName('phrase-input')[0];
-const display = document.getElementsByClassName('display-phrase')[0];
-const displaySplitted = document.getElementsByClassName('display-splitted-phrase')[0];
+const inputSentence = document.getElementsByClassName('sentence-input')[0];
+const display = document.getElementsByClassName('display-sentence')[0];
+const displaySplitted = document.getElementsByClassName('display-splitted-sentence')[0];
 
-let phrase = '';
+let sentence = '';
 
-inputPhrase.addEventListener("keyup", function(event) {
+inputSentence.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
-    sendPhrase();
+    sendSentence();
   }
 });
 
@@ -22,13 +22,13 @@ function showDisplay() {
     setTimeout(() => display.style.opacity = "1", 1);
 }
 
-function treatPhrase() {
-  phrase = inputPhrase.value.split(' ');
-  return phrase.filter(word => word.length > 0);
+function treatSentence() {
+  sentence = inputSentence.value.split(' ');
+  return sentence.filter(word => word.length > 0);
 }
 
-function buildDisplay(phrase) {
-  phrase.map((word, index) => {
+function buildDisplay(sentence) {
+  sentence.map((word, index) => {
       const span = document.createElement("span");
       span.className = "word";
       const text = document.createTextNode(word);
@@ -36,7 +36,7 @@ function buildDisplay(phrase) {
       if(index > 0) {
         const button = document.createElement("button");
         button.className = "btn-split"
-        button.setAttribute("onClick", `splitPhrase(${index})`);
+        button.setAttribute("onClick", `splitSentence(${index})`);
         span.appendChild(button);
       }
 
@@ -45,21 +45,21 @@ function buildDisplay(phrase) {
     }, display);
 }
 
-function sendPhrase() {
+function sendSentence() {
   resetDisplay();
-  phrase = treatPhrase();
+  sentence = treatSentence();
   
-  if(phrase.length) {
-    // force width to avoid compressed words in long phrases     
-    display.style.minWidth= `calc(${inputPhrase.value.length}ch + ${inputPhrase.value.length} * 5px)`;
+  if(sentence.length) {
+    // force width to avoid compressed words in long sentences     
+    display.style.minWidth= `calc(${inputSentence.value.length}ch + ${inputSentence.value.length} * 5px)`;
 
-    buildDisplay(phrase);
+    buildDisplay(sentence);
 
     showDisplay();
   }
 }
 
-function splitPhrase(indexPhrase) {
+function splitSentence(indexSentence) {
   displaySplitted.innerHTML = '';
   
   const before = document.createElement("div");
@@ -67,20 +67,20 @@ function splitPhrase(indexPhrase) {
   const after = document.createElement("div");
   after.className = "display after"
   
-  phrase.map((word, index) => { 
+  sentence.map((word, index) => { 
     const span = document.createElement("span");
     span.className = "word";
     const text = document.createTextNode(word);
     
     span.appendChild(text);
     
-    if(index < indexPhrase) {
+    if(index < indexSentence) {
       before.appendChild(span);
     } else {
       after.appendChild(span);
     }
     
-  }, indexPhrase, before, after);
+  }, indexSentence, before, after);
  
   displaySplitted.appendChild(before);
   displaySplitted.appendChild(after);

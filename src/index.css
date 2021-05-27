@@ -23,7 +23,7 @@ article {
   justify-content: space-between;
 }
 
-.phrase-input {
+.sentence-input {
   flex: 0 1 100%;
   font-size: 1.5rem;
   padding: 0 15px;
@@ -75,7 +75,7 @@ article {
   border: 1px solid;
 }
 
-.display-splitted-phrase {
+.display-splitted-sentence {
   display: none;
   font-size: 1.5rem;
 }
@@ -86,7 +86,7 @@ article {
 .after { flex: 0 1 100%;}
 
 @media only screen and (max-width: 600px){
-	.phrase-input {
+	.sentence-input {
     font-size: 1rem;
   }
 }
