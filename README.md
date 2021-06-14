@@ -7,7 +7,7 @@ The goal of this app is to provide a gamified experience with the creation of sy
 
 ## Running
 
-Right now, to see it working just live server the index.html file.
+Live server the index.html file.
 
 ## Next steps
 
