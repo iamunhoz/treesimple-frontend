@@ -1,14 +1,12 @@
 import React from 'react'
-import Sketch from "react-p5"
-import {setup} from './setup'
-import {draw} from './draw'
+import Phrase from './react/Phrase'
 
 function App() {
   return (
-    <Sketch
-      setup={setup}
-      draw={draw}
-      className='p5Sketch'
+    <Phrase 
+      x={300}
+      y={500}
+      words={['hello', 'Darkness', 'my', 'old', 'friend']}
     />
   )
 }
