@@ -1,4 +1,3 @@
-
 import p5Types from "p5"
 
 let setup = (p5: p5Types, canvasParentRef: Element) => {
@@ -8,7 +7,7 @@ let setup = (p5: p5Types, canvasParentRef: Element) => {
   let y = (p5.windowHeight - p5.height) / 2
   xyz.position(x, y)
   let inputer = p5.createInput('type something')
-  inputer.position((p5.windowWidth - inputer.width) / 2, 0, 'fixed')
+  inputer.position((p5.windowWidth) / 2, 0)
 }
 
 export {setup}
