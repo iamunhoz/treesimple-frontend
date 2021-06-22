@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import { makeStyles } from '@material-ui/styles'
 import {Button, Card, TextField} from '@material-ui/core'
-import Sentence from './react/Sentence'
-import Lines from './react/Lines'
+import Sentence from './assembling/Sentence'
+import Lines from './assembling/Lines'
 
 const useStyles = makeStyles({
   sentenceInput: {
@@ -24,6 +24,7 @@ function App() {
     setSentence(event.target.value)
   }
 
+  //TODO calcPosition(x,y)
   if (isThereSentence) {
     return (
       <div>
@@ -32,15 +33,22 @@ function App() {
         y={100}
         words={sentence}
         />
+        <br/>
+        <Button
+          onClick={() => {
+            setSentence('')
+            setIsThereSentence(false)
+          }}
+        >Start Over</Button>
       </div>
     )
-  } else {
+    } else {
     return (<Card className={classes.sentenceInput}>
       <TextField
       onChange={handleInput}></TextField>
       <Button
         onClick={handleClick}
-      >Start</Button>
+      >Start Branching</Button>
       <Lines/>
       </Card>
     )

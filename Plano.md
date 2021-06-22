@@ -2,6 +2,10 @@
 
 - main, que chama o Componente especifico pela primeira vez
 
+- Forms pra pegar a sentença do usuario
+
+- Business Logic (syntax tree no caso)
+
 # O Componente precisa ter:
 
 -imports

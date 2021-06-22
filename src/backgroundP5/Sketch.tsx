@@ -1,7 +1,7 @@
 import React from 'react'
 import Sketch from "react-p5"
-import {setup} from './../p5/setup'
-import {draw} from './../p5/draw'
+import {setup} from './setup'
+import {draw} from './draw'
 
 function App() {
   return (

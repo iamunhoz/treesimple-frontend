@@ -9,16 +9,16 @@ export default function Phrase(props:PhraseProps) {
       <div className='PhraseYing'>
         <div>{props.words}</div>
         <Phrase words={props.words}/>
-    </div>  
+      </div>  
     )
   } else {
-  return (
-    <div className='PhraseYing'>
-      <div>{props.words}</div>
-      <Button 
-        onClick={() => setBisectionIsActivated(true)}
-      >divide!</Button>
-    </div>
+    return (
+      <div className='PhraseYing'>
+        <div>{props.words}</div>
+        <Button 
+          onClick={() => setBisectionIsActivated(true)}
+        >divide!</Button>
+      </div>
   )}
 }
 
