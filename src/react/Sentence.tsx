@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Card, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
@@ -22,8 +22,7 @@ const useStyles = makeStyles({
 })
 
 
-export default function Phrase(props: PhraseProps) {
-  const [bisectionIsActivated, setBisectionIsActivated] = useState(false)
+export default function Sentence(props: PhraseProps) {
   let positionXY = phrasePosition(props.x, props.y)
   const classes = useStyles()
   const wordArray = props.words.split(' ')
