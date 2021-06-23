@@ -47,7 +47,7 @@ export default function PhraseOuter(props: PhraseOuterProps) {
 
   if (bisectionIsActivated) {
     return (
-      <div className=''>
+      <div className={'phrase'}>
         <PhraseInner
           style={positionXY}
           bisectFunction={setBisectionIsActivated}
@@ -97,10 +97,12 @@ interface PhraseInnerProps {
   parentY: number;
 }
 function PhraseInner(props: PhraseInnerProps) {
+  // até aqui chega o xy do parente
+
   const classes = useStyles()
   
   return (
-    <Card>
+    <Card className={'phraseBox'}>
       {props.wordArray.map((word, i) => {
         if (i < props.wordArray.length - 1) {
           return (

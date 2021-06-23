@@ -27,7 +27,7 @@ function App() {
   //TODO calcPosition(x,y)
   if (isThereSentence) {
     return (
-      <div>
+      <div className={'startOfEverything'}>
         <Sentence
         x={300}
         y={100}
