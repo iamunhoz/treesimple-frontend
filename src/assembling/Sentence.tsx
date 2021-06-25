@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { Card, Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import Lines from './Lines'
 
 const useStyles = makeStyles({
   root: {
@@ -8,6 +9,12 @@ const useStyles = makeStyles({
   },
   button: {
     display: 'inline',
+    fontSize: '10px',
+    color: '#aaa',
+    minWidth: '0',
+    width: '5px',
+    height: '100%',
+    padding: '0 0 0 0',
     border: '0',
     '&:hover':{
       backgroundColor: 'yellow'
@@ -18,6 +25,9 @@ const useStyles = makeStyles({
   },
   text: {
     padding: '10px 10px 10px 10px'
+  },
+  phraseBox: {
+    maxWidth: 'fit-content'
   }
 })
 
@@ -29,7 +39,6 @@ interface PhraseOuterProps {
   words: string;
 }
 export default function PhraseOuter(props: PhraseOuterProps) {
-  let positionXY = phrasePosition(props.x, props.y)
   const classes = useStyles()
   const wordArray = props.words.split(' ')
 
@@ -47,9 +56,8 @@ export default function PhraseOuter(props: PhraseOuterProps) {
 
   if (bisectionIsActivated) {
     return (
-      <div className={'phrase'}>
+      <>
         <PhraseInner
-          style={positionXY}
           bisectFunction={setBisectionIsActivated}
           wordArray={wordArray}
           setLeftSide={setSideLeft}
@@ -67,13 +75,11 @@ export default function PhraseOuter(props: PhraseOuterProps) {
           y={sideRight.y}
           words={sideRight.words}
         />
-      </div>  
+      </>  
     )
   } else {
     return (
-      <div className=''>
         <PhraseInner
-          style={positionXY} 
           bisectFunction={setBisectionIsActivated}
           wordArray={wordArray}
           setLeftSide={setSideLeft}
@@ -81,15 +87,12 @@ export default function PhraseOuter(props: PhraseOuterProps) {
           parentX={props.x}
           parentY={props.y}
         />
-
-      </div>
   )}
 }
 
 // the internal html layout of a Phrase (text element, button to branch, phraseType Setter[todo]
 interface PhraseInnerProps {
   bisectFunction: Function;
-  style: React.CSSProperties;
   wordArray: string[];
   setLeftSide: Function;
   setRightSide: Function;
@@ -97,12 +100,15 @@ interface PhraseInnerProps {
   parentY: number;
 }
 function PhraseInner(props: PhraseInnerProps) {
-  // até aqui chega o xy do parente
-
+  let positionXY = phrasePosition(props.parentX, props.parentY)
   const classes = useStyles()
+  const [isBranched, setIsBranched] = useState(false)
   
   return (
-    <Card className={'phraseBox'}>
+    <Card 
+      className={classes.phraseBox}
+      style={positionXY}
+      >
       {props.wordArray.map((word, i) => {
         if (i < props.wordArray.length - 1) {
           return (
@@ -110,20 +116,20 @@ function PhraseInner(props: PhraseInnerProps) {
               <Typography className={classes.text} component='span'>{word}</Typography>
               <Button
                 className={classes.button}
-                onClick={() => {
-                  createBranchHere(
-                    i,
-                    props.wordArray,
-                    props.bisectFunction,
-                    props.setLeftSide,
-                    props.setRightSide,
-                    props.parentX,
-                    props.parentY
-                  )
+                onClick={(event) => {createBranchHere(
+                                                i,
+                                                props.wordArray,
+                                                props.bisectFunction,
+                                                props.setLeftSide,
+                                                props.setRightSide,
+                                                event.clientX,
+                                                props.parentY,
+                                                setIsBranched)
                 }}
               >
                 Ʌ
               </Button>
+              <Lines visibility={isBranched}/>
             </span>
           )
         } else {
@@ -144,32 +150,34 @@ function createBranchHere (
   setLeftSide: Function,
   setRightSide: Function,
   parentX: number,
-  parentY: number
+  parentY: number,
+  drawLines: Function
   ){
-    let increment = 50
-    let pixelPerChar = 5
-
-    let leftSide = {
+    const incrementY = 100
+    const leftSide = {
       words: phraseArray.slice(0,i+1).join(' '),
-      x: parentX,
-      y: parentY + increment
+      x: 0,
+      y: parentY + incrementY
     }
-    
-    let rightSide = {
+    leftSide.x = parentX - (55 + leftSide.words.length*11)
+    const rightSide = {
       words: phraseArray.slice(i+1).join(' '),
-      x: parentX + (leftSide.words.length * pixelPerChar),
-      y: parentY + increment
+      x: parentX + (55 + leftSide.words.length*3),
+      y: parentY + incrementY
     }
+
     setLeftSide(leftSide)
     setRightSide(rightSide)
     activateBisection(true)
+    drawLines(false)
 }
 
 function phrasePosition  (x: number, y:number)  {
   return {
     position: 'absolute',
     left: `${x}px`,
-    top: `${y}px`
+    top: `${y}px`,
+    border: '2px solid whte'
   } as React.CSSProperties
 }
 
