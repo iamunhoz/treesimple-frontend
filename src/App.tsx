@@ -2,9 +2,11 @@ import React, {useState} from 'react'
 import { makeStyles } from '@material-ui/styles'
 import {Button, Card, TextField} from '@material-ui/core'
 import Sentence from './assembling/Sentence'
-import Lines from './assembling/Lines'
 
 const useStyles = makeStyles({
+  outermostContainer: {
+    backgroundBlendMode: 'lighten'
+  },
   container: {
     height: '90vh',
     display: 'flex',
@@ -17,15 +19,47 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: 'rgba(220, 240, 220, 0.7)',
+    backgroundBlendMode: 'lighten',
+    color: '#fff'
   }
 })
+
+//Lines
+const lineStyle = {
+  stroke: 'rgb(255,0,0)',
+  strokeWidth:'2'
+}
+
+const svgLayer:React.CSSProperties = {
+  position: 'absolute',
+  top: '0',
+  left: '0',
+  width: '100vw',
+  height: '100vh',
+  zIndex: '-999'
+}
+
+interface lineProps {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+}
+
+//
 
 function App() {
   const classes = useStyles()
   const [isThereSentence, setIsThereSentence] = useState(false)
   const [sentence, setSentence] = useState('pera uva salada mista arroz')
+  const [lines, setLines] = useState<lineProps[]>([])
   
+  const addLine = (newLineCoordinatesLeft:lineProps,newLineCoordinatesRight:lineProps) => {
+    setLines([...lines, newLineCoordinatesLeft, newLineCoordinatesRight])
+  }
+
   function handleClick() {
     setIsThereSentence(true)
   }
@@ -34,10 +68,21 @@ function App() {
     setSentence(event.target.value)
   }
 
-  //TODO calcPosition(x,y)
   if (isThereSentence) {
     return (
-      <div className={'startOfEverything'}>
+      <div className={classes.outermostContainer}>
+        <svg style={svgLayer}>
+          {lines.map((line, i) => {
+            return  <line 
+                      x1={line.x1}
+                      y1={line.y1}
+                      x2={line.x2}
+                      y2={line.y2}
+                      style={lineStyle}
+                      key={i}
+                    />
+          })}
+        </svg>
         <Button
           onClick={() => {
             setSentence('')
@@ -48,6 +93,7 @@ function App() {
         x={300}
         y={100}
         words={sentence}
+        linesController={addLine}
         />
         <br/>
       </div>
