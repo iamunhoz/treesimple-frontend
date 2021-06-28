@@ -38,7 +38,7 @@ const svgLayer:React.CSSProperties = {
   left: '0',
   width: '100vw',
   height: '100vh',
-  zIndex: '-999'
+  zIndex: -999
 }
 
 interface lineProps {
