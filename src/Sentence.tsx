@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { Card, Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import PhraseTypePing from './PhraseTypePin'
 import './fonts.css'
 
 const useStyles = makeStyles({
@@ -29,7 +30,8 @@ const useStyles = makeStyles({
   },
   phraseBox: {
     maxWidth: 'fit-content',
-    border: '3px solid #39A9CB'
+    border: '3px solid #39A9CB',
+    overflow: 'visible'
   }
 })
 
@@ -153,46 +155,48 @@ function PhraseInner(props: PhraseInnerProps) {
   const classes = useStyles()
   const [isBranched, setIsBranched] = useState(false)
   const [areButtonsDisabled, setAreButtonsDisabled] = useState(false)
+  const midX = props.wordArray.join('').length*4 + ((props.wordArray.length-1) * 10)
   
   return (
     <Card 
       className={classes.phraseBox}
       style={positionXY}
-      >
-      {props.wordArray.map((word, i) => {
-        if (i < props.wordArray.length - 1) {
-          return (
-            <span className={classes.box}  key={i}>
-              <Typography className={classes.text} component='span'>{word}</Typography>
-              <Button
-                className={classes.button}
-                disabled={areButtonsDisabled}
-                onClick={(event) => {createBranchHere(
-                                                i,
-                                                props.wordArray,
-                                                props.bisectFunction,
-                                                props.setLeftSide,
-                                                props.setRightSide,
-                                                event.clientX,
-                                                props.parentY,
-                                                setIsBranched,
-                                                props.linesController,
-                                                setAreButtonsDisabled)
-                }}
-              >
-                Ʌ
-              </Button>
-            </span>
-          )
-        } else {
-          return (
-            <span key={i}>
-              <Typography className={classes.text} component='span'>{word}</Typography>
-            </span>
-          )
-        }
-      })}
-    </Card>
+    >
+    <PhraseTypePing X={midX}/>
+    {props.wordArray.map((word, i) => {
+      if (i < props.wordArray.length - 1) {
+        return (
+          <span className={classes.box}  key={i}>
+            <Typography className={classes.text} component='span'>{word}</Typography>
+            <Button
+              className={classes.button}
+              disabled={areButtonsDisabled}
+              onClick={(event) => {createBranchHere(
+                                              i,
+                                              props.wordArray,
+                                              props.bisectFunction,
+                                              props.setLeftSide,
+                                              props.setRightSide,
+                                              event.clientX,
+                                              props.parentY,
+                                              setIsBranched,
+                                              props.linesController,
+                                              setAreButtonsDisabled)
+              }}
+            >
+              Ʌ
+            </Button>
+          </span>
+        )
+      } else {
+        return (
+          <span key={i}>
+            <Typography className={classes.text} component='span'>{word}</Typography>
+          </span>
+        )
+      }
+    })}
+  </Card>
   )
 }
 
