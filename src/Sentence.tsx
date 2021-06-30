@@ -160,7 +160,8 @@ function PhraseInner(props: PhraseInnerProps) {
   
   useEffect(() => {
     const card = document.getElementById(uniqueID)
-    setPinX(props.parentX - 10 + card?.clientWidth / 2)
+    if (card) {
+    setPinX(props.parentX - 10 + card.clientWidth / 2)}
   }, [])
   
   return (<>
