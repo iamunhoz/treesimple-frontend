@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Card, Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import PhraseTypePing from './PhraseTypePin'
+import PhraseTypePin from './PhraseTypePin'
 import './fonts.css'
 
 const useStyles = makeStyles({
@@ -55,7 +55,7 @@ function createBranchHere (
     }
     leftSide.x = parentX - (55 + leftSide.words.length*11)
     
-    const estimatedLeftBlockSize = (leftSide.words.length*13)+(phraseArray.slice(0,i+1).length*5)
+    const estimatedLeftBlockSize = (leftSide.words.length*10)+(phraseArray.slice(0,i+1).length*5)
 
     const rightSide = {
       words: phraseArray.slice(i+1).join(' '),
@@ -63,14 +63,14 @@ function createBranchHere (
       y: parentY + incrementY
     }
     const estimatedRightBlockSize = (rightSide.words.length*10)+(phraseArray.slice(i+1).length*5)
-    const lineIncrementY = 24
+    const lineIncrementY = 30
     linesController({
-      x1:parentX,
+      x1:parentX-3,
       y1:parentY + lineIncrementY,
       x2:leftSide.x+(estimatedLeftBlockSize/2),
       y2:leftSide.y
     },{
-      x1:parentX,
+      x1:parentX-3,
       y1:parentY + lineIncrementY,
       x2:rightSide.x+(estimatedRightBlockSize/2),
       y2:rightSide.y
@@ -151,18 +151,25 @@ export default function PhraseOuter(props: PhraseOuterProps) {
 
 // the internal html layout of a Phrase (text element, button to branch, phraseTypePin
 function PhraseInner(props: PhraseInnerProps) {
+  const [uniqueID,setUniqueID] = useState(`${Math.floor(Math.random() * 10000)}`)
   let positionXY = phrasePosition(props.parentX, props.parentY)
   const classes = useStyles()
   const [isBranched, setIsBranched] = useState(false)
   const [areButtonsDisabled, setAreButtonsDisabled] = useState(false)
-  const midX = props.wordArray.join('').length*4 + ((props.wordArray.length-1) * 10)
+  const [pinX, setPinX] = useState(0)
   
-  return (
-    <Card 
+  useEffect(() => {
+    const card = document.getElementById(uniqueID)
+    setPinX(props.parentX - 10 + card?.clientWidth / 2)
+  }, [])
+  
+  return (<>
+    <PhraseTypePin X={pinX} Y={props.parentY}/>
+    <Card
+      id={uniqueID}
       className={classes.phraseBox}
       style={positionXY}
     >
-    <PhraseTypePing X={midX}/>
     {props.wordArray.map((word, i) => {
       if (i < props.wordArray.length - 1) {
         return (
@@ -197,7 +204,7 @@ function PhraseInner(props: PhraseInnerProps) {
       }
     })}
   </Card>
-  )
+  </>)
 }
 
 interface PhraseInnerProps {

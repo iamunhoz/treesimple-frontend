@@ -5,21 +5,21 @@ import MenuItem from '@material-ui/core/MenuItem';
  
 interface pinProps {
   X: number
+  Y: number
 }
 export default function PhraseTypePin(props: pinProps) {
   const styles = {
     phraseTypeBox: {
+      position: 'absolute',
+      left: `${props.X}px`,
+      top: `${props.Y-15}px`,
       border: '2px solid #39A9CB',
       backgroundColor: 'white',
       color: '#39A9CB',
       borderRadius: '50%',
-      position: 'relative',
-      top: '-20px',
-      left: `${props.X}px`,
       fontSize: '13px',
       padding: '2px 2px',
       zIndex: 10,
-      width: '0%'
     }as React.CSSProperties
   }
   const [phraseType, setPhraseType] = useState('XP')
@@ -34,11 +34,12 @@ export default function PhraseTypePin(props: pinProps) {
     setAnchorEl(null);
   };
   return (
-    <>
+    <div>
       <span 
         style={styles.phraseTypeBox}
         onClick={handleClick}
-      >{phraseType}</span>
+      >{phraseType}
+      </span>
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
@@ -46,13 +47,13 @@ export default function PhraseTypePin(props: pinProps) {
         open={Boolean(anchorEl)}
         onClose={() => handleClose(phraseType)}
       >
-        <MenuItem onClick={() => handleClose('S')}>Sentence</MenuItem>
+        <MenuItem onClick={() => handleClose(' S ')}>Sentence</MenuItem>
         <MenuItem onClick={() => handleClose('NP')}>Noun Phrase</MenuItem>
         <MenuItem onClick={() => handleClose('VP')}>Verb Phrase</MenuItem>
         <MenuItem onClick={() => handleClose('PP')}>Preposition Phrase</MenuItem>
         <MenuItem onClick={() => handleClose('AdjP')}>Adjective Phrase</MenuItem>
         <MenuItem onClick={() => handleClose('AdvP')}>Adverb Phrase</MenuItem>
       </Menu>
-    </>
+    </div>
   )
 }

@@ -114,7 +114,7 @@ function App() {
         </svg>
         
         <Sentence
-        x={parent.innerWidth/3}
+        x={parent.innerWidth/2 - ((sentence.length/2) * 10)}
         y={100}
         words={sentence}
         linesController={addLine}
