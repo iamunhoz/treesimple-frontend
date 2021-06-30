@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Card, Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import Lines from './Lines'
+import './fonts.css'
 
 const useStyles = makeStyles({
   root: {
@@ -10,24 +10,26 @@ const useStyles = makeStyles({
   button: {
     display: 'inline',
     fontSize: '10px',
-    color: '#aaa',
+    color: 'rgba(200,200,200,0.3)',
     minWidth: '0',
     width: '5px',
     height: '100%',
-    padding: '0 0 0 0',
+    padding: '10px 0 0 0',
     border: '0',
     '&:hover':{
-      backgroundColor: 'yellow'
+      backgroundColor: '#39A9CB'
     }
   },
   box: {
     color: 'black'
   },
   text: {
-    padding: '10px 10px 10px 10px'
+    padding: '10px 10px 10px 10px',
+    fontFamily: 'Josefin Sans'
   },
   phraseBox: {
-    maxWidth: 'fit-content'
+    maxWidth: 'fit-content',
+    border: '3px solid #39A9CB'
   }
 })
 
@@ -40,7 +42,8 @@ function createBranchHere (
   parentX: number,
   parentY: number,
   drawLines: Function,
-  linesController: Function
+  linesController: Function,
+  disableButtons: Function
   ){
     const incrementY = 100
     const leftSide = {
@@ -75,6 +78,7 @@ function createBranchHere (
     setRightSide(rightSide)
     activateBisection(true)
     drawLines(false)
+    disableButtons(true)
 }
 
 function phrasePosition  (x: number, y:number)  {
@@ -148,6 +152,7 @@ function PhraseInner(props: PhraseInnerProps) {
   let positionXY = phrasePosition(props.parentX, props.parentY)
   const classes = useStyles()
   const [isBranched, setIsBranched] = useState(false)
+  const [areButtonsDisabled, setAreButtonsDisabled] = useState(false)
   
   return (
     <Card 
@@ -161,6 +166,7 @@ function PhraseInner(props: PhraseInnerProps) {
               <Typography className={classes.text} component='span'>{word}</Typography>
               <Button
                 className={classes.button}
+                disabled={areButtonsDisabled}
                 onClick={(event) => {createBranchHere(
                                                 i,
                                                 props.wordArray,
@@ -170,12 +176,12 @@ function PhraseInner(props: PhraseInnerProps) {
                                                 event.clientX,
                                                 props.parentY,
                                                 setIsBranched,
-                                                props.linesController)
+                                                props.linesController,
+                                                setAreButtonsDisabled)
                 }}
               >
                 Ʌ
               </Button>
-              <Lines visibility={isBranched}/>
             </span>
           )
         } else {

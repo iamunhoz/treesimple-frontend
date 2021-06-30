@@ -1,16 +1,19 @@
 import React, {useState} from 'react'
 import { makeStyles } from '@material-ui/styles'
 import {Button, Card, TextField} from '@material-ui/core'
-import Sentence from './assembling/Sentence'
+import Sentence from './Sentence'
+import TopAppBar from './TopAppBar'
+
 
 const useStyles = makeStyles({
-  outermostContainer: {
+  containerWithSentence: {
     backgroundBlendMode: 'lighten'
   },
-  container: {
-    height: '90vh',
+  containerWithoutSentence: {
+    height: '99vh',
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     alignItems: 'center'
   },
   sentenceInput: {
@@ -20,15 +23,34 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    backgroundColor: 'rgba(220, 240, 220, 0.7)',
-    backgroundBlendMode: 'lighten',
-    color: '#fff'
+    paddingLeft: '10px',
+    paddingRight: '10px',
+    border: '3px solid #39A9CB'
+  },
+  textField: {
+    "& .MuiInputBase-input":{
+    textAlign: "center"}
+  },
+  author: {
+    color: '#39A9CB'
+  },
+  branchBtn: {
+    backgroundColor: '#2940D3',
+    color: 'white',
+    maxWidth: 'fit-content',
+    marginTop: '10px'
+  },
+  centerBox: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   }
 })
 
 //Lines
 const lineStyle = {
-  stroke: 'rgb(255,0,0)',
+  stroke: '#39A9CB',
   strokeWidth:'2'
 }
 
@@ -53,7 +75,7 @@ interface lineProps {
 function App() {
   const classes = useStyles()
   const [isThereSentence, setIsThereSentence] = useState(false)
-  const [sentence, setSentence] = useState('pera uva salada mista arroz')
+  const [sentence, setSentence] = useState('Colorless green ideas sleep furiously')
   const [lines, setLines] = useState<lineProps[]>([])
   
   const addLine = (newLineCoordinatesLeft:lineProps,newLineCoordinatesRight:lineProps) => {
@@ -61,6 +83,7 @@ function App() {
   }
 
   function handleClick() {
+    setSentence(sentence.split(' ').filter(n => n).join(' '))
     setIsThereSentence(true)
   }
 
@@ -68,9 +91,15 @@ function App() {
     setSentence(event.target.value)
   }
 
+  function restart() {
+    setSentence('')
+    setIsThereSentence(false)
+    setLines([])
+  }
   if (isThereSentence) {
     return (
-      <div className={classes.outermostContainer}>
+      <div className={classes.containerWithSentence}>
+        <TopAppBar restart={restart} isThereSentence={isThereSentence}/>
         <svg style={svgLayer}>
           {lines.map((line, i) => {
             return  <line 
@@ -83,14 +112,9 @@ function App() {
                     />
           })}
         </svg>
-        <Button
-          onClick={() => {
-            setSentence('')
-            setIsThereSentence(false)
-          }}
-        >Start Over</Button>
+        
         <Sentence
-        x={300}
+        x={parent.innerWidth/3}
         y={100}
         words={sentence}
         linesController={addLine}
@@ -100,21 +124,30 @@ function App() {
     )
     } else {
     return (
-    <div className={classes.container}>
-      <Card className={classes.sentenceInput}>
-        <TextField
-          onChange={handleInput}
-          defaultValue='pera uva salada mista arroz'
-        ></TextField> <br/>
+    <div className={classes.containerWithoutSentence}>
+      <TopAppBar restart={restart} isThereSentence={isThereSentence}/>
+      <div className={classes.centerBox}>
+        <Card className={classes.sentenceInput}>
+          <TextField
+            className={classes.textField}
+            margin="normal"
+            fullWidth
+            onChange={handleInput}
+            defaultValue='Colorless green ideas sleep furiously'
+          ></TextField>
+        </Card>
         <Button
+          className={classes.branchBtn}
+          variant="contained"
           onClick={handleClick}
-        >Start Branching</Button>
-      </Card>
+        >
+          Start Branching
+        </Button>
+      </div>
+      <h5 className={classes.author}>by Ivã Munhoz</h5>
     </div>
     )
   }
 }
-
-
 
 export default App

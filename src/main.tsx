@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import TestApp from './tests/TestApp'
 import App from './App'
+import TopAppBar from './TopAppBar'
 
 ReactDOM.render(
   <React.StrictMode>
