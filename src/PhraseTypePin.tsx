@@ -18,7 +18,7 @@ export default function PhraseTypePin(props: pinProps) {
       left: `${props.X}px`,
       fontSize: '13px',
       padding: '2px 2px',
-      zIndex: 10  
+      zIndex: 10
     }as React.CSSProperties
   }
   const [phraseType, setPhraseType] = useState('XP')
@@ -43,12 +43,14 @@ export default function PhraseTypePin(props: pinProps) {
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}
+        onClose={() => handleClose(phraseType)}
       >
-        <MenuItem onClick={() => handleClose('NP')}>NP</MenuItem>
-        <MenuItem onClick={() => handleClose('VP')}>VP</MenuItem>
-        <MenuItem onClick={() => handleClose('PP')}>PP</MenuItem>
-        <MenuItem onClick={() => handleClose('AdjP')}>AdjP</MenuItem>
+        <MenuItem onClick={() => handleClose('S')}>Sentence</MenuItem>
+        <MenuItem onClick={() => handleClose('NP')}>Noun Phrase</MenuItem>
+        <MenuItem onClick={() => handleClose('VP')}>Verb Phrase</MenuItem>
+        <MenuItem onClick={() => handleClose('PP')}>Preposition Phrase</MenuItem>
+        <MenuItem onClick={() => handleClose('AdjP')}>Adjective Phrase</MenuItem>
+        <MenuItem onClick={() => handleClose('AdvP')}>Adverb Phrase</MenuItem>
       </Menu>
     </>
   )

@@ -1,5 +1,6 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, Theme} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,13 +9,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button'
 import './fonts.css'
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles({
     root: {
       width: '100%'
     },
     menuButton: {
-      marginRight: theme.spacing(2),
       gridColumnStart: 'menu'
     },
     toolbar: {
@@ -33,7 +32,6 @@ const useStyles = makeStyles((theme: Theme) =>
       gridColumnStart: 'button'
     }
   })
-)
 
 export default function DenseAppBar(props: DenseAppBarProps) {
   const classes = useStyles();

@@ -149,7 +149,7 @@ export default function PhraseOuter(props: PhraseOuterProps) {
   )}
 }
 
-// the internal html layout of a Phrase (text element, button to branch, phraseType Setter[todo]
+// the internal html layout of a Phrase (text element, button to branch, phraseTypePin
 function PhraseInner(props: PhraseInnerProps) {
   let positionXY = phrasePosition(props.parentX, props.parentY)
   const classes = useStyles()
