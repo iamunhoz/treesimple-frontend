@@ -18,7 +18,8 @@ export default function PhraseTypePin(props: pinProps) {
       left: `${props.X}px`,
       fontSize: '13px',
       padding: '2px 2px',
-      zIndex: 10
+      zIndex: 10,
+      width: '0%'
     }as React.CSSProperties
   }
   const [phraseType, setPhraseType] = useState('XP')

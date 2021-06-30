@@ -32,9 +32,7 @@ const useStyles = makeStyles({
     textAlign: "center"}
   },
   author: {
-    color: '#ccc',
-    WebkitTextStrokeWidth: '1px',
-    WebkitTextStrokeColor: '#39A9CB'
+    color: '#39A9CB'
   },
   branchBtn: {
     backgroundColor: '#2940D3',
