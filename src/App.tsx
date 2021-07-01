@@ -136,7 +136,7 @@ function App() {
             margin="normal"
             fullWidth
             onChange={handleInput}
-            defaultValue=''
+            placeholder='Write your sentence here'
           ></TextField>
         </Card>
         <Button
