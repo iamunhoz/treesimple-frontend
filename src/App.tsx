@@ -35,7 +35,10 @@ const useStyles = makeStyles({
     color: '#39A9CB'
   },
   branchBtn: {
-    backgroundColor: '#2940D3',
+    backgroundColor: '#39A9CB',
+    '&:hover': {
+      backgroundColor: '#2940D3'
+    },
     color: 'white',
     maxWidth: 'fit-content',
     marginTop: '10px'
@@ -133,13 +136,14 @@ function App() {
             margin="normal"
             fullWidth
             onChange={handleInput}
-            defaultValue='Colorless green ideas sleep furiously'
+            defaultValue=''
           ></TextField>
         </Card>
         <Button
           className={classes.branchBtn}
           variant="contained"
           onClick={handleClick}
+          disabled={sentence == '' ? true : false}
         >
           Start Branching
         </Button>

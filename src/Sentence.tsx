@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   button: {
     display: 'inline',
     fontSize: '10px',
-    color: 'rgba(200,200,200,0.3)',
+    color: 'rgba(200,200,200,0.5)',
     minWidth: '0',
     width: '5px',
     height: '100%',

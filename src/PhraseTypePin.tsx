@@ -51,6 +51,7 @@ export default function PhraseTypePin(props: pinProps) {
         <MenuItem onClick={() => handleClose('NP')}>Noun Phrase</MenuItem>
         <MenuItem onClick={() => handleClose('VP')}>Verb Phrase</MenuItem>
         <MenuItem onClick={() => handleClose('PP')}>Preposition Phrase</MenuItem>
+        <MenuItem onClick={() => handleClose('DP')}>Determiner Phrase</MenuItem>
         <MenuItem onClick={() => handleClose('AdjP')}>Adjective Phrase</MenuItem>
         <MenuItem onClick={() => handleClose('AdvP')}>Adverb Phrase</MenuItem>
       </Menu>
