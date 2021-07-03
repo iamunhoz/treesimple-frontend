@@ -7,7 +7,15 @@ If you are a linguist, professional, student or enthusiast, maybe you can find t
 3. If you click on this light blue bar, the sentence will be branched at that specific point, and two sub phrases will appear bellow.
 4. Each child phrase will have the same behaviour as its parent phrase, until there is only one lexical item in the phrase.
 5. At any time, you can click on the generic **XP** pin to change the phrase type.
-+ Note: It's a planned feature update do include not only Phrase Types, but also Lexical Types among options.
+
+## Upcomming features:
++ Saving and exporting trees.
++ Lexical Types.
++ User Registration and Groups
++ Creation of phrases with segments that are not together in the sequence of segments of the sentence. 
++ Undo Button
++ Alternative tree style, where the actual words are replaced in the screen by their Phrase Type (see picture bellow).
+
 # For Developers
 
 ## General Information
@@ -19,10 +27,10 @@ If you are a linguist, professional, student or enthusiast, maybe you can find t
 |Components library|Material-UI|
 |styling|react-jss hooks|
 |Demo|https://noam.netlify.app|
-|License| GPL
+|License| GPL 3|
 
 ## Main Purpose
-Noam is a Simplified Syntax Tree Generator. It is named after a famous proponent linguist of this theory, Noam Chomsky. And it is called _Simplified_ because there is a lot more to be said about Syntax Trees than what it is included in this software. If your goal is to use a comprehensive tool for academic research, The author of this software advises you to opt for the excelent [TreeForm](https://sourceforge.net/projects/treeform/) or look for [LateX Solutions](https://duckduckgo.com/?q=latex+syntax+tree).
+Noam is a Simplified Syntax Tree Generator. It is named after a famous proponent linguist of this theory, [Noam Chomsky](https://en.wikipedia.org/wiki/Noam_Chomsky). And it is called _Simplified_ because there is a lot more to be said about Syntax Trees than what it is included in this software. If your need a comprehensive tool for academic research, The author of this software advises you to opt for the excelent [TreeForm](https://sourceforge.net/projects/treeform/) or look for [LateX Solutions](https://duckduckgo.com/?q=latex+syntax+tree).
 
 It was chosen to be _Simplified_ in a effort to make it an __introductory educational tool__ for this theory. The author had in mind not linguists doing their work, but teachers that would like to use Syntax Trees in their children or teenager classrooms.
 
@@ -36,8 +44,12 @@ And a graphical example, taken from the article above:
 
 
 ## The Role of React
-Besides the standard Components related to a web application layout, the most important component is the __\<Phrase>__ component. 
-It is composed of two inter related sub Components:
+Besides the standard react components related to a web application layout, the most important one is the __\<Phrase>__ component. It is _recursive_, due to part of its behavior is to replicate itself with new derivated data from a parent component.
 
-### __\<PhraseWrapper>:__
+### It is composed of two inter related sub Components:
+
+#### __\<PhraseWrapper>:__
 It is the the component that is finally exposed as the _default export_ of this module. It takes as _props_ three parameters: **x** and **y** coordinates and **words**, which is an **string array** containing the segments of the sentence, taking a basic (but linguistically innacurate) rule for separation: **spaces**.
+
+#### __\<PhraseInnerStructure>:__
+This component is called only by the previous component. It is responsible for the internal layout of a Phrase Component and it where the resides the function `createBranchHere()`, responsible for the calculation of the position of children elements and their respective data.
