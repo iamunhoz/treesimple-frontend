@@ -3,7 +3,7 @@ If you are a linguist, professional, student or enthusiast, maybe you can find t
 
 Here you will find the source code of this software. If you want to see it running, go to its [Demo page](https://noam.netlify.app)
 
-If you got curious and to know about how this code was created, the road would include learning HTML,CSS, JavaScript, TypeScript and React. You will find dozens of good free resources on the web about them.
+If you got curious and want to know about how this code was created, the road would include learning HTML,CSS, JavaScript, TypeScript and React. You will find dozens of good free resources on the web about them.
 
 ## How to use
 1. Write your sentence on the text box and click on **Start Branching**
