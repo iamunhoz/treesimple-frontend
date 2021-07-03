@@ -1,7 +1,11 @@
 # For Users
 If you are a linguist, professional, student or enthusiast, maybe you can find this application too simple, or too innacurate. If this happens to be your evaluation of this software, the author, who is a linguistics student and an amateur programmer and will always keep this as an open source software, is looking for feedback about things that could improve this application. If you could be so kind, send an e-mail explaining how was your experience and what you probably missed when using it.
 
-Here you will find the source code of this software. If you want to see it running, go to its [Demo page](https://noam.netlify.app)
+It was chosen to be _Simplified_ in a effort to make it an __introductory educational tool__ for this theory. The author had in mind not linguists doing their work, but teachers that would like to use Syntax Trees in their children or teenager classrooms.
+
+If your need a comprehensive tool for academic research, The author of this software advises you to opt for the excelent [TreeForm](https://sourceforge.net/projects/treeform/) or look for [LateX Solutions](https://duckduckgo.com/?q=latex+syntax+tree).
+
+Here you will find the source code of this software. If you want to see it running, go to its [Demo page](https://noam.netlify.app).
 
 If you got curious and want to know about how this code was created, the road would include learning HTML,CSS, JavaScript, TypeScript and React. You will find dozens of good free resources on the web about them.
 
@@ -34,9 +38,7 @@ If you got curious and want to know about how this code was created, the road wo
 |License| GPL 3|
 
 ## Main Purpose
-Noam is a Simplified Syntax Tree Generator. It is named after a famous proponent linguist of this theory, [Noam Chomsky](https://en.wikipedia.org/wiki/Noam_Chomsky). And it is called _Simplified_ because there is a lot more to be said about Syntax Trees than what it is included in this software. If your need a comprehensive tool for academic research, The author of this software advises you to opt for the excelent [TreeForm](https://sourceforge.net/projects/treeform/) or look for [LateX Solutions](https://duckduckgo.com/?q=latex+syntax+tree).
-
-It was chosen to be _Simplified_ in a effort to make it an __introductory educational tool__ for this theory. The author had in mind not linguists doing their work, but teachers that would like to use Syntax Trees in their children or teenager classrooms.
+Noam is a Simplified Syntax Tree Generator. It is named after a famous proponent linguist of this theory, [Noam Chomsky](https://en.wikipedia.org/wiki/Noam_Chomsky). And it is called _Simplified_ because there is a lot more to be said about Syntax Trees than what it is included in this software. 
 
 ## Definition of a Syntax Tree
 According to [this](https://www.geeksforgeeks.org/syntax-tree-natural-language-processing/) article of the site GeeksforGeeks:
