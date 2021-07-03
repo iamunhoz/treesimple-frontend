@@ -1,6 +1,10 @@
 # For Users
 If you are a linguist, professional, student or enthusiast, maybe you can find this application too simple, or too innacurate. If this happens to be your evaluation of this software, the author, who is a linguistics student and an amateur programmer and will always keep this as an open source software, is looking for feedback about things that could improve this application. If you could be so kind, send an e-mail explaining how was your experience and what you probably missed when using it.
 
+Here you will find the source code of this software. If you want to see it running, go to its [Demo page](https://noam.netlify.app)
+
+If you got curious and to know about how this code was created, the road would include learning HTML,CSS, JavaScript, TypeScript and React. You will find dozens of good free resources on the web about them.
+
 ## How to use
 1. Write your sentence on the text box and click on **Start Branching**
 2. Hover your mouse at the spaces between words. It will make a light blue bar appear.
