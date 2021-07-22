@@ -1,7 +1,7 @@
 # For Users
 If you are a linguist, professional, student or enthusiast, maybe you can find this application too simple, or too innacurate. If this happens to be your evaluation of this software, the author, who is a linguistics student and an amateur programmer and will always keep this as an open source software, is looking for feedback about things that could improve this application. If you could be so kind, send an e-mail explaining how was your experience and what you probably missed when using it.
 
-It was chosen to be _Simplified_ in a effort to make it an __introductory educational tool__ for this theory. The author had in mind not linguists doing their work, but teachers that would like to use Syntax Trees in their children or teenager classrooms.
+It was chosen to be _Simplified_ in a effort to make it an __introductory educational tool__ for this theory. The author had in mind not linguists doing their work, but teachers that would like to use Syntax Trees in their children or teenager classrooms. Also, the author doesn't plead to have any particular authority over the subject, consider they as just a curious person willing do spread academic information.
 
 If your need a comprehensive tool for academic research, The author of this software advises you to opt for the excelent [TreeForm](https://sourceforge.net/projects/treeform/) or look for [LateX Solutions](https://duckduckgo.com/?q=latex+syntax+tree).
 
@@ -58,4 +58,7 @@ Besides the standard react components related to a web application layout, the m
 It is the the component that is finally exposed as the _default export_ of this module. It takes as _props_ three parameters: **x** and **y** coordinates and **words**, which is an **string array** containing the segments of the sentence, taking a basic (but linguistically innacurate) rule for separation: **spaces**.
 
 #### __\<PhraseInnerStructure>:__
-This component is called only by the previous component. It is responsible for the internal layout of a Phrase Component and it where the resides the function `createBranchHere()`, responsible for the calculation of the position of children elements and their respective data.
+This component is called only by the previous component. It is responsible for the internal layout of a Phrase Component and where the function `createBranchHere()` resides, which is responsible for the calculation of the position of child elements and their respective data.
+
+## Positioning
+Each Phrase needs to be placed on the DOM with very specific positions to avoid collision of components from different parent branches. Because of this, instead of the regular _inline or block_, _flex or grid_ HTML workflow, all Phrases components have `position: absolute` and the parameters **x** and **y** set the css properties `left` and `top` respectively.
