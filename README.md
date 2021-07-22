@@ -1,9 +1,9 @@
 # For Users
-If you are a linguist, professional, student or enthusiast, maybe you can find this application too simple, or too innacurate. If this happens to be your evaluation of this software, the author, who is a linguistics student and an amateur programmer and will always keep this as an open source software, is looking for feedback about things that could improve this application. If you could be so kind, send an e-mail explaining how was your experience and what you probably missed when using it.
+If you are a linguist, professional, student or enthusiast, maybe you can find this application too simple, or too inaccurate. If this happens to be your evaluation of this software, the author, who is a linguistics student and an amateur programmer and will always keep this as an open source software, is looking for feedback about things that could improve this application. If you could be so kind, send an e-mail explaining how was your experience and what you probably missed when using it.
 
-It was chosen to be _Simplified_ in a effort to make it an __introductory educational tool__ for this theory. The author had in mind not linguists doing their work, but teachers that would like to use Syntax Trees in their children or teenager classrooms. Also, the author doesn't plead to have any particular authority over the subject, consider they as just a curious person willing do spread academic information.
+It was chosen to be _Simplified_ in a effort to make it an __introductory educational tool__ for this theory. The author had in mind not linguists doing their work, but teachers that would like to use Syntax Trees in their children or teenager classrooms. Also, the author doesn't plead to have any particular authority over the subject, consider they as just a curious person willing to spread academic information.
 
-If your need a comprehensive tool for academic research, The author of this software advises you to opt for the excelent [TreeForm](https://sourceforge.net/projects/treeform/) or look for [LateX Solutions](https://duckduckgo.com/?q=latex+syntax+tree).
+If your need a comprehensive tool for academic research, The author of this software advises you to opt for the excellent [TreeForm](https://sourceforge.net/projects/treeform/) or look for [LateX Solutions](https://duckduckgo.com/?q=latex+syntax+tree).
 
 Here you will find the source code of this software. If you want to see it running, go to its [Demo page](https://noam.netlify.app).
 
@@ -13,10 +13,10 @@ If you got curious and want to know about how this code was created, the road wo
 1. Write your sentence on the text box and click on **Start Branching**
 2. Hover your mouse at the spaces between words. It will make a light blue bar appear.
 3. If you click on this light blue bar, the sentence will be branched at that specific point, and two sub phrases will appear bellow.
-4. Each child phrase will have the same behaviour as its parent phrase, until there is only one lexical item in the phrase.
+4. Each child phrase will have the same behavior as its parent phrase, until there is only one lexical item in the phrase.
 5. At any time, you can click on the generic **XP** pin to change the phrase type.
 
-## Upcomming features:
+## Upcoming features:
 + Saving and exporting trees.
 + Lexical Types.
 + User Registration and Groups
@@ -50,12 +50,12 @@ And a graphical example, taken from the article above:
 
 
 ## The Role of React
-Besides the standard react components related to a web application layout, the most important one is the __\<Phrase>__ component. It is _recursive_, due to part of its behavior is to replicate itself with new derivated data from a parent component.
+Besides the standard react components related to a web application layout, the most important one is the __\<Phrase>__ component. It is _recursive_, due to part of its behavior is to replicate itself with new derived data from a parent component.
 
 ### It is composed of two inter related sub Components:
 
 #### __\<PhraseWrapper>:__
-It is the the component that is finally exposed as the _default export_ of this module. It takes as _props_ three parameters: **x** and **y** coordinates and **words**, which is an **string array** containing the segments of the sentence, taking a basic (but linguistically innacurate) rule for separation: **spaces**.
+It is the the component that is finally exposed as the _default export_ of this module. It takes as _props_ three parameters: **x** and **y** coordinates and **words**, which is an **string array** containing the segments of the sentence, taking a basic (but linguistically inaccurate) rule for separation: **spaces**.
 
 #### __\<PhraseInnerStructure>:__
 This component is called only by the previous component. It is responsible for the internal layout of a Phrase Component and where the function `createBranchHere()` resides, which is responsible for the calculation of the position of child elements and their respective data.
