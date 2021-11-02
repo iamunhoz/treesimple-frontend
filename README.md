@@ -61,4 +61,4 @@ It is the the component that is finally exposed as the _default export_ of this 
 This component is called only by the previous component. It is responsible for the internal layout of a Phrase Component and where the function `createBranchHere()` resides, which is responsible for the calculation of the position of child elements and their respective data.
 
 ## Positioning
-Each Phrase needs to be placed on the DOM with very specific positions to avoid collision of components from different parent branches. Because of this, instead of the regular _inline or block_, _flex or grid_ HTML workflow, all Phrases components have `position: absolute` and the parameters **x** and **y** set the css properties `left` and `top` respectively.
+Each Phrase needs to be placed on the DOM at specific positions to avoid collision of components from different parent branches. Because of this, instead of the regular _inline or block_, _flex or grid_ HTML workflow, all Phrases components have `position: absolute` and the parameters **x** and **y** set the css properties `left` and `top` respectively.
