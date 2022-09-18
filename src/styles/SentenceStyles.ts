@@ -22,7 +22,7 @@ export const useStyles = makeStyles({
   },
   text: {
     padding: '10px 10px 10px 10px',
-    fontFamily: 'Josefin Sans'
+    fontFamily: 'Snes'
   },
   phraseBox: {
     maxWidth: 'fit-content',

@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     backgroundColor: '#39A9CB'
   },
   appName: {
-    fontFamily: 'Josefin Sans',
+    fontFamily: 'Pixel Emulator',
     fontSize: '2.5rem',
     gridColumnStart: 'logo'
   },

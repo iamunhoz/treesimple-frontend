@@ -4,3 +4,17 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Pixel Emulator';
+  src: url('/src/assets/pixelemulator.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Snes';
+  src: url('/src/assets/SnesItalic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
