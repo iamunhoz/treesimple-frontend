@@ -1,24 +1,17 @@
-import Avatar from 'components/Avatar'
+import { useAppStore } from 'state'
+import InputSentence from './InputSentence'
+import SyntaxTree from './SyntaxTree'
+import Topbar from './Topbar'
 
 function App() {
+  const showSentenceInput = useAppStore((state) => state.showSentenceInput)
+
   return (
-    <div className="bg-white">
-      <div className="mx-auto max-w-screen-xl py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-base font-semibold uppercase tracking-wide text-blue-600">
-            Welcome to
-          </h2>
-          <p className="my-3 text-4xl font-bold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
-            reactjs-vite-tailwindcss-boilerplate
-          </p>
-          <p className="text-xl text-gray-400">Start building for free.</p>
-          <p className="mt-5">
-            <Avatar
-              size="large"
-              src="https://www.gravatar.com/avatar/4405735f6f3129e0286d9d43e7b460d0"
-            />
-          </p>
-        </div>
+    <div className="flex h-full flex-col bg-yellow-100">
+      <Topbar />
+
+      <div className="flex flex-1 flex-col items-center justify-center">
+        {showSentenceInput ? <InputSentence /> : <SyntaxTree />}
       </div>
     </div>
   )
