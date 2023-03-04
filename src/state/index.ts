@@ -1,4 +1,6 @@
+import { Phrase } from 'types/PhraseTypes'
 import create from 'zustand'
+import { persist } from 'zustand/middleware'
 
 type AppStore = {
   sentence: string | undefined
@@ -21,3 +23,38 @@ export const useAppStore = create<AppStore>((set) => ({
     set(() => ({ sentence }))
   }
 }))
+
+export type SyntaxStore = {
+  phrases: Phrase[]
+  addPhrase: (phrase: Phrase | undefined) => void
+  getPhrase: (phraseId: string) => void
+  removePhrase: (phraseId: string) => void
+}
+
+export const useSyntaxStore = create(
+  persist(
+    (set, get) => ({
+      phrases: [],
+      addPhrase(phrase: Phrase) {
+        if (!phrase) return
+        set((state: SyntaxStore) => ({ phrases: [...state.phrases, phrase] }))
+      },
+      getPhrase(phraseId: string) {
+        return (get() as SyntaxStore).phrases.find(
+          (phrase: Phrase) => phrase.self_id === phraseId
+        )
+      },
+      removePhrase(phraseId: string) {
+        set((state: SyntaxStore) => ({
+          phrases: state.phrases.filter((phrase) => phrase.self_id !== phraseId)
+        }))
+      }
+    }),
+    {
+      name: 'syntax-store',
+      getStorage: () => localStorage,
+      serialize: (state) => btoa(JSON.stringify(state)),
+      deserialize: (str) => JSON.parse(atob(str))
+    }
+  )
+)

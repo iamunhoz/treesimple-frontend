@@ -7,10 +7,10 @@ function App() {
   const showSentenceInput = useAppStore((state) => state.showSentenceInput)
 
   return (
-    <div className="flex h-full flex-col bg-yellow-100">
+    <div className='flex h-full flex-col bg-yellow-100'>
       <Topbar />
 
-      <div className="flex flex-1 flex-col items-center justify-center">
+      <div className='flex flex-1 flex-col items-center justify-center'>
         {showSentenceInput ? <InputSentence /> : <SyntaxTree />}
       </div>
     </div>
