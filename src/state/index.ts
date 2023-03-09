@@ -1,10 +1,11 @@
-import { Phrase } from 'types/PhraseTypes'
-import create from 'zustand'
-import { persist } from 'zustand/middleware'
+import { nanoid } from 'nanoid'
+import { TPhrase, TTree } from 'types/PhraseTypes'
+import { create } from 'zustand'
+// import { persist } from 'zustand/middleware'
 
 type AppStore = {
-  sentence: string | undefined
-  setSentence: (sentence: string) => void
+  currentTree: TTree | undefined
+  setCurrentTree: (payload: string | TTree) => void
   showSentenceInput: boolean
   toggleSentenceInput: () => void
   setShowSentenceInput: (choice: boolean) => void
@@ -18,43 +19,56 @@ export const useAppStore = create<AppStore>((set) => ({
   toggleSentenceInput: () => {
     set((state) => ({ showSentenceInput: !state.showSentenceInput }))
   },
-  sentence: undefined,
-  setSentence(sentence) {
-    set(() => ({ sentence }))
+  currentTree: undefined,
+  setCurrentTree(payload) {
+    set(() => {
+      if (typeof payload === 'string') {
+        return {
+          currentTree: {
+            fullSentence: payload,
+            id: nanoid(),
+            phrases: []
+          }
+        }
+      } else {
+        return { currentTree: payload }
+      }
+    })
   }
 }))
 
-export type SyntaxStore = {
-  phrases: Phrase[]
-  addPhrase: (phrase: Phrase | undefined) => void
+export type TreeStore = {
+  phrases: TPhrase[]
+  addPhrase: (phrase: TPhrase[]) => void
   getPhrase: (phraseId: string) => void
   removePhrase: (phraseId: string) => void
 }
 
-export const useSyntaxStore = create(
-  persist(
-    (set, get) => ({
-      phrases: [],
-      addPhrase(phrase: Phrase) {
-        if (!phrase) return
-        set((state: SyntaxStore) => ({ phrases: [...state.phrases, phrase] }))
-      },
-      getPhrase(phraseId: string) {
-        return (get() as SyntaxStore).phrases.find(
-          (phrase: Phrase) => phrase.self_id === phraseId
-        )
-      },
-      removePhrase(phraseId: string) {
-        set((state: SyntaxStore) => ({
-          phrases: state.phrases.filter((phrase) => phrase.self_id !== phraseId)
-        }))
-      }
-    }),
+export const useTreeStore = create<TreeStore>(
+  // persist(
+  (set, get) => ({
+    phrases: [],
+    addPhrase(phrase: TPhrase[]) {
+      set((state: TreeStore) => ({ phrases: [...state.phrases, ...phrase] }))
+    },
+    getPhrase(phraseId: string) {
+      return (get() as TreeStore).phrases.find(
+        (phrase: TPhrase) => phrase.id === phraseId
+      )
+    },
+    removePhrase(phraseId: string) {
+      set((state: TreeStore) => ({
+        phrases: state.phrases.filter((phrase) => phrase.id !== phraseId)
+      }))
+    }
+    // TODO editPhrase(phraseId)
+  }) /* ,
+    caso queira salvar state zustand no localstorage para recuperar depois
     {
       name: 'syntax-store',
       getStorage: () => localStorage,
       serialize: (state) => btoa(JSON.stringify(state)),
       deserialize: (str) => JSON.parse(atob(str))
     }
-  )
+  ) */
 )
