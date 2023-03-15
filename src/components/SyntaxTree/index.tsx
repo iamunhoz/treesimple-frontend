@@ -5,7 +5,7 @@ export default function SyntaxTree() {
   const { phrases } = useTreeStore((state) => state)
 
   return (
-    <div>
+    <div className='relative'>
       {phrases.map((phrase) => (
         <Phrase key={phrase.id} phrase={phrase} />
       ))}

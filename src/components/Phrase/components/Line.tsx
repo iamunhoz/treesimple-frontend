@@ -9,7 +9,7 @@ export function Line(props: LineProps): JSX.Element {
 
   if (!parentId) return <></>
   return (
-    <div>
+    <div className='text-xs text-red-500'>
       {parentId}
       {selfId}
     </div>
