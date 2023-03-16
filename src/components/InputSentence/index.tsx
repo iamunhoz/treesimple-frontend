@@ -12,10 +12,10 @@ export default function InputSentence() {
   const { addPhrase } = useTreeStore((state) => state)
 
   const startBuilding = useCallback(() => {
-    setCurrentTree(inputValue)
+    setCurrentTree(inputValue || 'i am the walrus')
     addPhrase([
       {
-        body: inputValue,
+        body: inputValue || 'i am the walrus',
         id: nanoid(),
         leftChildId: null,
         rightChildId: null,

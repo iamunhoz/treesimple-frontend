@@ -28,20 +28,23 @@ export type Id = number | string
 
 export type TTree = {
   fullSentence: string
-  id: Id
+  id: string
   phrases: TPhrase[]
 }
 
 export type TPhrase = {
-  id: Id
-  parentId: Id | null
-  leftChildId: Id | null
-  rightChildId: Id | null
+  id: string
+  parentId?: string | null
+  leftChildId?: string | null
+  rightChildId?: string | null
   body: string
-  head: string | null
+  head?: string | null
   // role: PhraseRole
-  type: TPhraseType | null
+  type?: TPhraseType | null
   anchor?: TAnchor
+  width?: number
+  positionX?: number
+  positionY?: number
 }
 
 export type TAnchor = {
