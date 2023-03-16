@@ -20,20 +20,11 @@ export default function usePhraseLogic(props: UsePhraseLogicProps) {
     if (!ref || !ref.current) return
     const { left, top } = ref.current.getBoundingClientRect()
 
-    const leftChild: Partial<TPhrase> = {
-      body: words.slice(0, idx).join(' '),
-      id: `left-${nanoid()}`
-    }
-    const rightChild: Partial<TPhrase> = {
-      body: words.slice(idx).join(' '),
-      id: `right-${nanoid()}`
-    }
+    const leftChildId = `left-${nanoid()}`
+    const rightChildId = `right-${nanoid()}`
 
     let gap = (words.slice(1, -1).join(' ').length * 10) / 2
     gap = gap < 15 ? 15 : gap
-
-    leftChild.positionX = evt.clientX - gap - (evt.clientX - left)
-    rightChild.positionX = evt.clientX + gap
 
     const positionY = top + 10
 
@@ -41,20 +32,20 @@ export default function usePhraseLogic(props: UsePhraseLogicProps) {
       {
         body: words.slice(0, idx).join(' '),
         parentId: id,
-        id: leftChild.id as string,
-        positionX: leftChild.positionX,
+        id: leftChildId,
+        positionX: evt.clientX - gap - (evt.clientX - left),
         positionY
       },
       {
         body: words.slice(idx).join(' '),
         parentId: id,
-        id: rightChild.id as string,
-        positionX: rightChild.positionX,
+        id: rightChildId,
+        positionX: evt.clientX + gap,
         positionY
       }
     ])
 
-    editPhrase(id, { leftChildId: leftChild.id, rightChildId: rightChild.id })
+    editPhrase(id, { leftChildId, rightChildId })
   }
 
   const setPosition = (): React.CSSProperties => {
