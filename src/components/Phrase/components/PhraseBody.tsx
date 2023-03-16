@@ -16,7 +16,7 @@ export function PhraseBody(props: PhraseBodyProps): JSX.Element {
   const { words, splitHere } = props
 
   return (
-    <div className='flex border-4'>
+    <div className='flex rounded-md border-4 border-teal-200 px-1'>
       {words.map((word, idx) => (
         <div key={word} className='flex'>
           {!!idx && (

@@ -19,7 +19,7 @@ export function Phrase(props: PhraseProps): JSX.Element {
   return (
     <div
       ref={ref}
-      className={`absolute w-fit -translate-x-1/2`}
+      className={`absolute w-fit ${!parentId ? '-translate-x-1/2' : ''}`}
       style={setPosition()}
     >
       <Line parentId={parentId} selfId={id} />

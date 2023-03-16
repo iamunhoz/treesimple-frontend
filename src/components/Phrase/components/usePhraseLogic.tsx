@@ -2,8 +2,6 @@ import { nanoid } from 'nanoid'
 import { useTreeStore } from 'state'
 import { TPhrase } from 'types/PhraseTypes'
 
-const GAP = 50
-
 type UsePhraseLogicProps = {
   ref: React.RefObject<HTMLDivElement>
   phrase: TPhrase
@@ -20,21 +18,24 @@ export default function usePhraseLogic(props: UsePhraseLogicProps) {
     evt: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     if (!ref || !ref.current) return
-    const { left, width, top } = ref.current.getBoundingClientRect()
+    const { left, top } = ref.current.getBoundingClientRect()
 
     const leftChild: Partial<TPhrase> = {
-      id: `left-${nanoid()}`,
-      width: evt.clientX - left
+      body: words.slice(0, idx).join(' '),
+      id: `left-${nanoid()}`
     }
     const rightChild: Partial<TPhrase> = {
-      id: `right-${nanoid()}`,
-      width: width - evt.clientX
+      body: words.slice(idx).join(' '),
+      id: `right-${nanoid()}`
     }
 
-    leftChild.positionX = left - GAP
-    rightChild.positionX = left + (leftChild.width as number) + GAP
+    let gap = (words.slice(1, -1).join(' ').length * 10) / 2
+    gap = gap < 15 ? 15 : gap
 
-    const positionY = top + 100
+    leftChild.positionX = evt.clientX - gap - (evt.clientX - left)
+    rightChild.positionX = evt.clientX + gap
+
+    const positionY = top + 10
 
     addPhrase([
       {
