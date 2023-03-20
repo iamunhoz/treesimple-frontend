@@ -1,9 +1,13 @@
 import { useTreeStore } from 'state'
 import { TPhrase } from 'types/PhraseTypes'
+import { TOP_BAR_HEIGHT } from 'utils/constants'
 
 type LineProps = {
   phrase: TPhrase
 }
+
+const offset = TOP_BAR_HEIGHT
+
 export function Line(props: LineProps): JSX.Element {
   const { phrase } = props
 
@@ -13,12 +17,15 @@ export function Line(props: LineProps): JSX.Element {
 
   const parentPhrase = getPhrase(phrase.parentId)
 
+  if (!phrase.topAnchor || !parentPhrase || !parentPhrase.bottomAnchor)
+    return <></>
+
   return (
     <line
-      x1={phrase.topAnchor?.x}
-      y1={phrase.topAnchor?.y}
-      x2={parentPhrase?.bottomAnchor?.x}
-      y2={parentPhrase?.bottomAnchor?.y}
+      x1={phrase.topAnchor.x /* x - offset */}
+      y1={phrase.topAnchor.y - offset}
+      x2={parentPhrase.bottomAnchor.x /* x - offset */}
+      y2={parentPhrase.bottomAnchor.y - offset}
       stroke='#99F6E4'
       strokeWidth='2'
     />
