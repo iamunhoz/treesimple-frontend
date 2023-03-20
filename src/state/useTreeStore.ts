@@ -4,7 +4,7 @@ import { create } from 'zustand'
 export type TreeStore = {
   phrases: TPhrase[]
   addPhrase: (phrase: TPhrase[]) => void
-  getPhrase: (phraseId: string) => void
+  getPhrase: (phraseId: string) => TPhrase | undefined
   editPhrase: (phraseId: string, payload: Partial<TPhrase>) => void
   removePhrase: (phraseId: string) => void
   startOver: () => void
@@ -19,7 +19,7 @@ export const useTreeStore = create<TreeStore>(
       set((state: TreeStore) => ({ phrases: [...state.phrases, ...phrase] }))
     },
 
-    getPhrase(phraseId: string) {
+    getPhrase(phraseId: string): TPhrase | undefined {
       return (get() as TreeStore).phrases.find(
         (phrase: TPhrase) => phrase.id === phraseId
       )

@@ -1,14 +1,3 @@
-// import { nanoid } from 'nanoid'
-
-/* export interface Word {
-  root?: string
-  prefix?: string
-  suffix?: string
-  whole: string
-} */
-
-// export type PhraseRole = 'head' | 'tail' | 'sentence' | 'atom'
-
 export type TPhraseType =
   | 'Sentence'
   | 'NounP'
@@ -18,11 +7,6 @@ export type TPhraseType =
   | 'DeterminerP'
   | 'AdverbP'
   | undefined
-
-/* export interface PhraseInterface {
-  head: Word | undefined
-  tail?: PhraseInterface
-} */
 
 export type Id = number | string
 
@@ -41,15 +25,11 @@ export type TPhrase = {
   head?: string | null
   // role: PhraseRole
   type?: TPhraseType | null
-  anchor?: TAnchor
   width?: number
   positionX?: number
   positionY?: number
-}
-
-export type TAnchor = {
-  top?: Coord
-  bottom?: Coord
+  topAnchor?: Coord
+  bottomAnchor?: Coord
 }
 
 export type Coord = {
@@ -123,4 +103,20 @@ export class Phrase {
     this.role = payload.role
     this.self_id = nanoid(2)
   }
+} */
+
+// import { nanoid } from 'nanoid'
+
+/* export interface Word {
+  root?: string
+  prefix?: string
+  suffix?: string
+  whole: string
+} */
+
+// export type PhraseRole = 'head' | 'tail' | 'sentence' | 'atom'
+
+/* export interface PhraseInterface {
+  head: Word | undefined
+  tail?: PhraseInterface
 } */

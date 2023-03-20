@@ -1,15 +1,26 @@
+import { useTreeStore } from 'state'
+import { TPhrase } from 'types/PhraseTypes'
+
 type LineProps = {
-  parentId?: string | null
-  selfId: string
+  phrase: TPhrase
 }
 export function Line(props: LineProps): JSX.Element {
-  const { parentId, selfId } = props
+  const { phrase } = props
 
-  if (!parentId) return <></>
+  const { getPhrase } = useTreeStore()
+
+  if (!phrase.parentId) return <></>
+
+  const parentPhrase = getPhrase(phrase.parentId)
+
   return (
-    <div className='text-xs text-red-500' hidden>
-      {parentId}
-      {selfId}
-    </div>
+    <line
+      x1={phrase.topAnchor?.x}
+      y1={phrase.topAnchor?.y}
+      x2={parentPhrase?.bottomAnchor?.x}
+      y2={parentPhrase?.bottomAnchor?.y}
+      stroke='#99F6E4'
+      strokeWidth='2'
+    />
   )
 }
