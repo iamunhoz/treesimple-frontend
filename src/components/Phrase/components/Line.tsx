@@ -6,7 +6,7 @@ type LineProps = {
   phrase: TPhrase
 }
 
-const offset = TOP_BAR_HEIGHT
+const offset = TOP_BAR_HEIGHT + 5
 
 export function Line(props: LineProps): JSX.Element {
   const { phrase } = props
