@@ -1,6 +1,30 @@
-const URL_PROD = 'https://api.tecno.mobi'
-// const URL_SAND = `${http}://sandbox.tecno.mobi`
-//const URL_SAND = `${http}://localhost:100`;
+export const baseURL = 'https://server-production-f58d.up.railway.app'
 
-const url = URL_PROD
-export const baseURL = `${url}/api/v1`
+export type BuildUrlParameterList = Record<
+  string,
+  string | string[] | number | unknown | undefined | null
+>
+
+/**
+ *  Constrói a URL que vai para a requisição
+ *  @param endpoint - Enum Endpoint ou Endpoint
+ *  @param parameterList - Objeto contendo os parâmetros que irão na URL
+ *  @param idpk - (Opcional) Caso precisar informar o idpk de um registro
+ */
+export function buildUrl(
+  endpoint: string,
+  parameterList: BuildUrlParameterList
+): string {
+  let url = `${baseURL}/${endpoint}?`
+
+  Object.keys(parameterList).forEach((key: string) => {
+    if (parameterList[key] !== undefined && parameterList[key] !== null) {
+      const value = String(parameterList[key])
+      url = `${url}${key}=${value}&`
+    }
+  })
+
+  url = url.substring(0, url.length - 1)
+
+  return url
+}
