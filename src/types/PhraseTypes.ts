@@ -8,8 +8,6 @@ export type TPhraseType =
   | 'AdverbP'
   | undefined
 
-export type Id = number | string
-
 export type TTree = {
   fullSentence: string
   id: string
