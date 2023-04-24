@@ -10,5 +10,3 @@ const ApiSemToken = axios.create({
 })
 
 export default ApiSemToken
-
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
