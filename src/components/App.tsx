@@ -1,4 +1,5 @@
 import { useAppStore } from 'state'
+import { DrawerUser } from './DrawerUser'
 import InputSentence from './InputSentence'
 import SyntaxTree from './SyntaxTree'
 import Topbar from './Topbar'
@@ -13,6 +14,8 @@ function App() {
       <div className='flex w-full flex-1 flex-col items-center justify-center'>
         {showSentenceInput ? <InputSentence /> : <SyntaxTree />}
       </div>
+
+      <DrawerUser />
     </div>
   )
 }

@@ -1,24 +1,16 @@
-import { buildUrl } from 'services/axios/ip'
-import { SemToken } from 'services/crud'
+import { Button } from 'antd'
+import { MenuOutlined } from '@ant-design/icons'
 import { useAppStore } from 'state'
 import { useTreeStore } from 'state'
 import { TOP_BAR_HEIGHT } from 'utils/constants'
-
-const testServer = async () => {
-  const params = {
-    key: 'teste-front',
-    value: 'sucesso'
-  }
-  const url = buildUrl('add-new-value', params)
-  const response = await SemToken.get(url)
-
-  console.log('railway server response', response)
-}
 
 export default function Topbar() {
   const setShowSentenceInput = useAppStore(
     (state) => state.setShowSentenceInput
   )
+
+  const setShowDrawerUser = useAppStore((state) => state.setShowDrawerUser)
+
   const { startOver } = useTreeStore((state) => state)
 
   const reset = () => {
@@ -33,8 +25,16 @@ export default function Topbar() {
     >
       <p className='text-center text-xl'>Noam</p>
       <div className='absolute right-0 mr-3'>
-        <button onClick={testServer}>test server</button>
         <button onClick={reset}>Start Over</button>
+
+        <Button
+          onClick={() => {
+            setShowDrawerUser(true)
+          }}
+          type='text'
+        >
+          <MenuOutlined />
+        </Button>
       </div>
     </div>
   )

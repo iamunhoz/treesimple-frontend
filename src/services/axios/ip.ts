@@ -15,16 +15,19 @@ export function buildUrl(
   endpoint: string,
   parameterList: BuildUrlParameterList
 ): string {
-  let url = `${baseURL}/${endpoint}?`
+  let url = `${baseURL}/${endpoint}`
 
-  Object.keys(parameterList).forEach((key: string) => {
-    if (parameterList[key] !== undefined && parameterList[key] !== null) {
-      const value = String(parameterList[key])
-      url = `${url}${key}=${value}&`
-    }
-  })
+  if (Object.keys(parameterList).length) {
+    url = `${url}?`
 
-  url = url.substring(0, url.length - 1)
+    Object.keys(parameterList).forEach((key: string) => {
+      if (parameterList[key] !== undefined && parameterList[key] !== null) {
+        const value = String(parameterList[key])
+        url = `${url}${key}=${value}&`
+      }
+    })
+    url = url.substring(0, url.length - 1)
+  }
 
   return url
 }

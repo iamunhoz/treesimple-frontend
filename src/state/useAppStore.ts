@@ -1,12 +1,17 @@
 import { nanoid } from 'nanoid'
 import { TTree } from 'types/PhraseTypes'
 import { create } from 'zustand'
+
 type AppStore = {
   currentTree: TTree | undefined
   setCurrentTree: (payload: string | TTree) => void
+
   showSentenceInput: boolean
   toggleSentenceInput: () => void
   setShowSentenceInput: (choice: boolean) => void
+
+  showDrawerUser: boolean
+  setShowDrawerUser: (choice: boolean) => void
 }
 
 export const useAppStore = create<AppStore>((set) => ({
@@ -32,5 +37,10 @@ export const useAppStore = create<AppStore>((set) => ({
         return { currentTree: payload }
       }
     })
+  },
+
+  showDrawerUser: false,
+  setShowDrawerUser(choice) {
+    set(() => ({ showDrawerUser: choice }))
   }
 }))
