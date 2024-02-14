@@ -33,19 +33,21 @@ export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
       parentId: phrase.id,
     }
 
+    const bodyLength = getWidthFromCharLength(phrase.body)
+
     setIsBtnSplitterDisabled(true)
     addPhrasesToCurrentSentence([leftSide, rightSide])
     addLinesCoordinates([
       {
-        parentX: phrase.x,
-        parentY: phrase.y,
-        x: leftSide.x,
+        parentX: phrase.x + bodyLength * 5,
+        parentY: phrase.y + 30,
+        x: leftSide.x + getWidthFromCharLength(leftSide.body) * 5,
         y: leftSide.y,
       },
       {
-        parentX: phrase.x,
-        parentY: phrase.y,
-        x: rightSide.x,
+        parentX: phrase.x + bodyLength * 5,
+        parentY: phrase.y + 30,
+        x: rightSide.x + getWidthFromCharLength(rightSide.body) * 5,
         y: rightSide.y,
       },
     ])
@@ -56,7 +58,8 @@ export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
         border: "2px solid orange",
         fontSize: "2rem",
         display: "flex",
-        width: getWidthFromCharLength(phrase.body),
+        width: `${getWidthFromCharLength(phrase.body)}rem`,
+        height: "30px",
         justifyContent: "center",
         alignItems: "end",
         position: "absolute",
