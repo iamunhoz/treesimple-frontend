@@ -15,16 +15,16 @@ export const useSentenceActions = (/* props: TuseSentenceActionsProps */) => {
     setCurrentSentence(sentence)
   }
 
-  const addPhraseToCurrentSentence = (phrase: Phrase) => {
+  const addPhrasesToCurrentSentence = (phrases: Phrase[]) => {
     setCurrentSentence((prev) => ({
       id: prev.id,
-      phrases: [...prev.phrases, phrase],
+      phrases: [...prev.phrases, ...phrases],
     }))
   }
 
   return {
     currentSentence,
     replaceCurrentSentence,
-    addPhraseToCurrentSentence,
+    addPhrasesToCurrentSentence,
   }
 }

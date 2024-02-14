@@ -2,6 +2,7 @@
 
 import { useSentenceActions } from "@/state/useSentenceActions"
 import { Box, Button, Input } from "@mui/material"
+import { nanoid } from "nanoid"
 import { useRouter } from "next/navigation"
 import { ChangeEventHandler, useState } from "react"
 
@@ -17,9 +18,11 @@ export function SentenceInputSection(): JSX.Element {
   }
 
   const handleStartButtonClick = () => {
+    const thisId = nanoid()
+    const sentence = getSentenceData(rawSentence, thisId)
     replaceCurrentSentence({
-      id: "xxx",
-      phrases: [{ id: "1", body: rawSentence, parentId: "xxx" }],
+      id: thisId,
+      phrases: [sentence],
     })
     router.push("/plotting")
   }
@@ -54,4 +57,18 @@ export function SentenceInputSection(): JSX.Element {
       <Button onClick={handleStartButtonClick}>Start</Button>
     </Box>
   )
+}
+
+function getSentenceData(body: string, parentId: string) {
+  const phrase = {
+    id: nanoid(),
+    body,
+    parentId,
+    x: 0,
+    y: 25,
+  }
+
+  phrase.x = window.innerWidth / 2 - phrase.body.length * 6
+
+  return phrase
 }
