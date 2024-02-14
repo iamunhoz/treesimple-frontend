@@ -1,6 +1,6 @@
-import { useAtom } from "jotai"
-import { currentSentenceAtom } from "./atoms"
-import { Phrase, Sentence } from "@/lib/definitions"
+import { useAtom, useSetAtom } from "jotai"
+import { currentSentenceAtom, drawingLinesCoordinatesAtom } from "./atoms"
+import { LinesCoordinates, Phrase, Sentence } from "@/lib/definitions"
 
 /* type TuseSentenceActionsProps = {
   phraseId?: string
@@ -10,6 +10,7 @@ import { Phrase, Sentence } from "@/lib/definitions"
 export const useSentenceActions = (/* props: TuseSentenceActionsProps */) => {
   // const { phraseId, parentPhraseId } = props
   const [currentSentence, setCurrentSentence] = useAtom(currentSentenceAtom)
+  const setDrawingLinesCoordinates = useSetAtom(drawingLinesCoordinatesAtom)
 
   const replaceCurrentSentence = (sentence: Sentence) => {
     setCurrentSentence(sentence)
@@ -22,9 +23,14 @@ export const useSentenceActions = (/* props: TuseSentenceActionsProps */) => {
     }))
   }
 
+  const addLinesCoordinates = (lines: LinesCoordinates[]) => {
+    setDrawingLinesCoordinates((prev) => [...prev, ...lines])
+  }
+
   return {
     currentSentence,
     replaceCurrentSentence,
     addPhrasesToCurrentSentence,
+    addLinesCoordinates,
   }
 }

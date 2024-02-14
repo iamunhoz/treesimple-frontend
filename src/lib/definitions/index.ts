@@ -10,3 +10,10 @@ export type Sentence = {
   id: string
   phrases: Phrase[]
 }
+
+export interface LinesCoordinates {
+  x: number
+  y: number
+  parentX: number
+  parentY: number
+}

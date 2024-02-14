@@ -1,6 +1,6 @@
 "use client"
 
-import { Sentence } from "@/lib/definitions"
+import { LinesCoordinates, Sentence } from "@/lib/definitions"
 import { atom } from "jotai"
 
 const getSentenceData = () => {
@@ -21,3 +21,5 @@ export const currentSentenceAtom = atom<Sentence>({
   id: "model",
   phrases: [getSentenceData()],
 })
+
+export const drawingLinesCoordinatesAtom = atom<LinesCoordinates[]>([])

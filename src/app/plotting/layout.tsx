@@ -1,6 +1,6 @@
 "use client"
 
-import { currentSentenceAtom } from "@/state/atoms"
+import { currentSentenceAtom, drawingLinesCoordinatesAtom } from "@/state/atoms"
 import { Box, Button } from "@mui/material"
 import { useAtomValue } from "jotai"
 import Link from "next/link"
@@ -11,6 +11,7 @@ export default function PlottingLayout({
   children: React.ReactNode
 }>) {
   const currentSentence = useAtomValue(currentSentenceAtom)
+  const drawingLinesCoordinate = useAtomValue(drawingLinesCoordinatesAtom)
   return (
     <Box
       sx={{
@@ -29,6 +30,17 @@ export default function PlottingLayout({
         }}
       >
         {JSON.stringify(currentSentence)}
+      </Box>
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: 150,
+          left: 0,
+          fontSize: "1.5rem",
+          color: "white",
+        }}
+      >
+        {JSON.stringify(drawingLinesCoordinate)}
       </Box>
       <Button
         LinkComponent={Link}
