@@ -1,6 +1,7 @@
 "use client"
 
 import { Phrase } from "@/lib/definitions"
+import { Y_INCREMENT } from "@/lib/sentence"
 import { getWidthFromCharLength } from "@/lib/strings"
 import { useSentenceActions } from "@/state/useSentenceActions"
 import { Box } from "@mui/material"
@@ -19,17 +20,18 @@ export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
   const phraseWords = phrase.body.split(" ")
   const handleSplitPhraseHere = (idx: number) => {
     const leftSide: Phrase = {
-      id: nanoid(),
+      id: `leftside-${nanoid()}`,
       body: [...phraseWords].slice(0, idx).join(" "),
-      y: phrase.y + 75,
+      y: phrase.y + Y_INCREMENT,
       x: phrase.x - 10,
       parentId: phrase.id,
     }
     const rightSide: Phrase = {
-      id: nanoid(),
+      id: `rightside-${nanoid()}`,
       body: [...phraseWords].slice(idx).join(" "),
-      y: phrase.y + 75,
-      x: phrase.x + 12 * leftSide.body.length,
+      y: phrase.y + Y_INCREMENT,
+      // criar fusão desse '14' e o resultado de getWidthFromCharLength
+      x: phrase.x + 16 * leftSide.body.length,
       parentId: phrase.id,
     }
 
@@ -68,6 +70,7 @@ export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
         left: phrase.x,
         p: 0,
       }}
+      id={phrase.id}
     >
       {phraseWords.map((word, idx) => (
         <Fragment key={idx}>

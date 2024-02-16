@@ -1,5 +1,7 @@
 "use client"
 
+import { convertPlainTreeToTreeWithCoordinates } from "@/lib/sentence"
+import { plainSentence } from "@/state/sentence-examples"
 import { useSentenceActions } from "@/state/useSentenceActions"
 import { Box, Button, Input } from "@mui/material"
 import { nanoid } from "nanoid"
@@ -25,6 +27,10 @@ export function SentenceInputSection(): JSX.Element {
       phrases: [sentence],
     })
     router.push("/plotting")
+  }
+
+  const handleSentenceImport = () => {
+    convertPlainTreeToTreeWithCoordinates(plainSentence)
   }
 
   return (
@@ -55,6 +61,8 @@ export function SentenceInputSection(): JSX.Element {
         }}
       />
       <Button onClick={handleStartButtonClick}>Start</Button>
+
+      <Button onClick={handleSentenceImport}>Test sentence import</Button>
     </Box>
   )
 }

@@ -2,11 +2,6 @@ import { useAtom, useSetAtom } from "jotai"
 import { currentSentenceAtom, drawingLinesCoordinatesAtom } from "./atoms"
 import { LinesCoordinates, Phrase, Sentence } from "@/lib/definitions"
 
-/* type TuseSentenceActionsProps = {
-  phraseId?: string
-  parentPhraseId?: string
-} */
-
 export const useSentenceActions = (/* props: TuseSentenceActionsProps */) => {
   // const { phraseId, parentPhraseId } = props
   const [currentSentence, setCurrentSentence] = useAtom(currentSentenceAtom)
