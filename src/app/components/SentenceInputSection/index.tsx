@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation"
 import { ChangeEventHandler, useState } from "react"
 
 export function SentenceInputSection(): JSX.Element {
-  const { replaceCurrentSentence } = useSentenceActions()
+  const { replaceCurrentSentence, addLinesCoordinates } = useSentenceActions()
   const [rawSentence, setRawSentence] = useState(
     "The bastard yellow rabbit is here"
   )
@@ -32,10 +32,8 @@ export function SentenceInputSection(): JSX.Element {
   const handleSentenceImport = () => {
     const tree = convertPlainTreeToTreeWithCoordinates(plainSentence)
     replaceCurrentSentence(tree.sentence)
+    addLinesCoordinates(tree.lines)
     router.push("/plotting")
-
-    // criar nova fn para aceitar tree com coordenadas
-    //replaceCurrentSentenceWithTree....
   }
 
   return (

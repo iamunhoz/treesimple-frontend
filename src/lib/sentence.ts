@@ -3,14 +3,29 @@
 import {
   Coordinates,
   Phrase,
-  PlainPhrase,
   PlainSentence,
   Sentence,
   TreeWithCoordinates,
 } from "./definitions"
+import { getWidthFromCharLength } from "./strings"
 
 export const TOPMOST_PHRASE_Y = 25
 export const Y_INCREMENT = 75
+export const PHRASE_BODY_HEIGHT = 30
+
+export function calculateParentXYLinePosition(parentPhrase: Phrase) {
+  const bodyLength = getWidthFromCharLength(parentPhrase.body)
+
+  return {
+    parentX: parentPhrase.x + bodyLength * 5,
+    parentY: parentPhrase.y + PHRASE_BODY_HEIGHT,
+  }
+}
+
+export function calculateThisPhraseXYLinePosition(phrase: Phrase) {
+  const bodyLength = getWidthFromCharLength(phrase.body)
+  return { x: phrase.x + bodyLength * 5, y: phrase.y }
+}
 
 export function getXCenterPosition(bodyLength: number) {
   return window.innerWidth / 2 - bodyLength * 6
@@ -51,8 +66,6 @@ function setTopmostPhraseCoordinates({
   })
 }
 
-// function calculateX
-
 function setChildrenCoordinates({
   id,
   plainSentence,
@@ -62,7 +75,6 @@ function setChildrenCoordinates({
   plainSentence: PlainSentence
   sentence: Sentence
 }) {
-  // find this phrase in sentence obj
   const thisPhrase = sentence.phrases.filter((phrase) => phrase.id === id)[0]
 
   // find child phrases, but without distinguishing sides
@@ -72,6 +84,7 @@ function setChildrenCoordinates({
 
   if (foundChildren.length) {
     // ensure right order: 0 is leftside, 1 is rightside
+    // because rightside position is calculated AFTER leftside position is known
     const [leftPhrase, rightPhrase] = foundChildren.sort((phrase) =>
       phrase.id.includes("leftside") ? 1 : 0
     )
@@ -86,12 +99,34 @@ function setChildrenCoordinates({
       ...getRightSideXYPosition(thisPhrase, leftPhrase.body.length),
     })
 
+    // repeat recursively...
     setChildrenCoordinates({ id: leftPhrase.id, plainSentence, sentence })
     setChildrenCoordinates({ id: rightPhrase.id, plainSentence, sentence })
-    // if no children is found, this is the bottommost phrase
   } else {
+    // until no children is found
     return
   }
+}
+
+function generateLinesFromPositionedPhrases(
+  phrases: Phrase[]
+): TreeWithCoordinates["lines"] {
+  const lines: TreeWithCoordinates["lines"] = []
+
+  // slice bc phrases[0] doesn't have parent to draw lines to
+  phrases.slice(1).forEach((phrase) => {
+    const parentPhrase = phrases.find(
+      (__phrase) => phrase.parentId === __phrase.id
+    )
+    if (!parentPhrase) return
+
+    lines.push({
+      ...calculateParentXYLinePosition(parentPhrase),
+      ...calculateThisPhraseXYLinePosition(phrase),
+    })
+  })
+
+  return lines
 }
 
 export function convertPlainTreeToTreeWithCoordinates(
@@ -110,10 +145,10 @@ export function convertPlainTreeToTreeWithCoordinates(
     sentence,
   })
 
-  // console.log({ sentence })
+  const lines = generateLinesFromPositionedPhrases(sentence.phrases)
 
   return {
     sentence,
-    lines: [],
+    lines,
   }
 }

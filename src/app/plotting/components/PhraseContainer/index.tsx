@@ -1,7 +1,11 @@
 "use client"
 
 import { Phrase } from "@/lib/definitions"
-import { Y_INCREMENT } from "@/lib/sentence"
+import {
+  PHRASE_BODY_HEIGHT,
+  calculateParentXYLinePosition,
+  calculateThisPhraseXYLinePosition,
+} from "@/lib/sentence"
 import { getWidthFromCharLength } from "@/lib/strings"
 import { getLeftSideXYPosition, getRightSideXYPosition } from "@/lib/sentence"
 import { useSentenceActions } from "@/state/useSentenceActions"
@@ -21,41 +25,30 @@ export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
   const phraseWords = phrase.body.split(" ")
   const handleSplitPhraseHere = (idx: number) => {
     const leftSide: Phrase = {
-      id: `leftside-${nanoid()}`,
+      id: `leftside-${nanoid()}`, // TODO melhorar geração de id
       body: [...phraseWords].slice(0, idx).join(" "),
-      /* y: phrase.y + Y_INCREMENT,
-      x: phrase.x - 10, */
       ...getLeftSideXYPosition(phrase),
       parentId: phrase.id,
     }
     const rightSide: Phrase = {
       id: `rightside-${nanoid()}`,
       body: [...phraseWords].slice(idx).join(" "),
-      /* y: phrase.y + Y_INCREMENT,
-      // criar fusão desse '14' e o resultado de getWidthFromCharLength
-      x: phrase.x + 16 * leftSide.body.length, */
       ...getRightSideXYPosition(phrase, leftSide.body.length),
       parentId: phrase.id,
     }
 
-    const bodyLength = getWidthFromCharLength(phrase.body)
-
-    setIsBtnSplitterDisabled(true)
     addPhrasesToCurrentSentence([leftSide, rightSide])
     addLinesCoordinates([
       {
-        parentX: phrase.x + bodyLength * 5,
-        parentY: phrase.y + 30,
-        x: leftSide.x + getWidthFromCharLength(leftSide.body) * 5,
-        y: leftSide.y,
+        ...calculateParentXYLinePosition(phrase),
+        ...calculateThisPhraseXYLinePosition(leftSide),
       },
       {
-        parentX: phrase.x + bodyLength * 5,
-        parentY: phrase.y + 30,
-        x: rightSide.x + getWidthFromCharLength(rightSide.body) * 5,
-        y: rightSide.y,
+        ...calculateParentXYLinePosition(phrase),
+        ...calculateThisPhraseXYLinePosition(rightSide),
       },
     ])
+    setIsBtnSplitterDisabled(true)
   }
   return (
     <Box
@@ -64,7 +57,7 @@ export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
         fontSize: "2rem",
         display: "flex",
         width: `${getWidthFromCharLength(phrase.body)}rem`,
-        height: "30px",
+        height: `${PHRASE_BODY_HEIGHT}px`,
         justifyContent: "center",
         alignItems: "end",
         position: "absolute",
