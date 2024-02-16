@@ -1,16 +1,10 @@
 "use client"
 
 import { Phrase } from "@/lib/definitions"
-import {
-  PHRASE_BODY_HEIGHT,
-  calculateParentXYLinePosition,
-  calculateThisPhraseXYLinePosition,
-} from "@/lib/sentence"
+import { PHRASE_BODY_HEIGHT } from "@/lib/sentence"
 import { getWidthFromCharLength } from "@/lib/strings"
-import { getLeftSideXYPosition, getRightSideXYPosition } from "@/lib/sentence"
 import { useSentenceActions } from "@/state/useSentenceActions"
 import { Box } from "@mui/material"
-import { nanoid } from "nanoid"
 import { Fragment, useState } from "react"
 
 type PhraseContainerProps = {
@@ -18,36 +12,11 @@ type PhraseContainerProps = {
 }
 export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
   const { phrase } = props
-  const { addPhrasesToCurrentSentence, addLinesCoordinates } =
-    useSentenceActions()
+  const { sendSplitToState } = useSentenceActions()
   const [isBtnSplitterDisabled, setIsBtnSplitterDisabled] = useState(false)
 
-  const phraseWords = phrase.body.split(" ")
   const handleSplitPhraseHere = (idx: number) => {
-    const leftSide: Phrase = {
-      id: `leftside-${nanoid()}`, // TODO melhorar geração de id
-      body: [...phraseWords].slice(0, idx).join(" "),
-      ...getLeftSideXYPosition(phrase),
-      parentId: phrase.id,
-    }
-    const rightSide: Phrase = {
-      id: `rightside-${nanoid()}`,
-      body: [...phraseWords].slice(idx).join(" "),
-      ...getRightSideXYPosition(phrase, leftSide.body.length),
-      parentId: phrase.id,
-    }
-
-    addPhrasesToCurrentSentence([leftSide, rightSide])
-    addLinesCoordinates([
-      {
-        ...calculateParentXYLinePosition(phrase),
-        ...calculateThisPhraseXYLinePosition(leftSide),
-      },
-      {
-        ...calculateParentXYLinePosition(phrase),
-        ...calculateThisPhraseXYLinePosition(rightSide),
-      },
-    ])
+    sendSplitToState(phrase, idx)
     setIsBtnSplitterDisabled(true)
   }
   return (
@@ -68,7 +37,7 @@ export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
       }}
       id={phrase.id}
     >
-      {phraseWords.map((word, idx) => (
+      {phrase.body.split(" ").map((word, idx) => (
         <Fragment key={idx}>
           {idx > 0 && (
             <Box

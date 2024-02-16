@@ -20,7 +20,23 @@ export default function PlottingLayout({
       }}
     >
       <>{children}</>
-      <Box
+      <Button
+        LinkComponent={Link}
+        href="/"
+        sx={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          color: "white",
+          fontSize: "1rem",
+          width: "1.5rem",
+          height: "2.4rem",
+          p: 0,
+        }}
+      >
+        Voltar
+      </Button>
+      {/* <Box
         sx={{
           position: "absolute",
           bottom: 0,
@@ -41,14 +57,7 @@ export default function PlottingLayout({
         }}
       >
         {JSON.stringify(drawingLinesCoordinate)}
-      </Box>
-      <Button
-        LinkComponent={Link}
-        href="/"
-        sx={{ position: "absolute", top: 0, right: 0 }}
-      >
-        Voltar
-      </Button>
+      </Box> */}
     </Box>
   )
 }

@@ -1,5 +1,6 @@
 "use client"
 
+import { nanoid } from "nanoid"
 import {
   Coordinates,
   Phrase,
@@ -48,6 +49,33 @@ export const getRightSideXYPosition = (
   }
 }
 
+export function createLeftSideSplit(
+  phrase: Phrase,
+  splitterIdx: number
+): Phrase {
+  const phraseWords = phrase.body.split(" ")
+  return {
+    id: `leftside-${nanoid()}`, // TODO melhorar geração de id
+    body: [...phraseWords].slice(0, splitterIdx).join(" "),
+    ...getLeftSideXYPosition(phrase),
+    parentId: phrase.id,
+  }
+}
+
+export function createRigthSideSplit(
+  phrase: Phrase,
+  splitterIdx: number,
+  leftSideBodyLength: number
+) {
+  const phraseWords = phrase.body.split(" ")
+  return {
+    id: `rightside-${nanoid()}`,
+    body: [...phraseWords].slice(splitterIdx).join(" "),
+    ...getRightSideXYPosition(phrase, leftSideBodyLength),
+    parentId: phrase.id,
+  }
+}
+
 function setTopmostPhraseCoordinates({
   plainSentence,
   sentence,
@@ -67,19 +95,21 @@ function setTopmostPhraseCoordinates({
 }
 
 function setChildrenCoordinates({
-  id,
+  parentId,
   plainSentence,
   sentence,
 }: {
-  id: string
+  parentId: string
   plainSentence: PlainSentence
   sentence: Sentence
 }) {
-  const thisPhrase = sentence.phrases.filter((phrase) => phrase.id === id)[0]
+  const parentPhrase = sentence.phrases.filter(
+    (phrase) => phrase.id === parentId
+  )[0]
 
   // find child phrases, but without distinguishing sides
   const foundChildren = plainSentence.phrases.filter(
-    (phrase) => phrase.parentId === id
+    (phrase) => phrase.parentId === parentId
   )
 
   if (foundChildren.length) {
@@ -91,17 +121,21 @@ function setChildrenCoordinates({
 
     sentence.phrases.push({
       ...leftPhrase,
-      ...getLeftSideXYPosition(thisPhrase),
+      ...getLeftSideXYPosition(parentPhrase),
     })
 
     sentence.phrases.push({
       ...rightPhrase,
-      ...getRightSideXYPosition(thisPhrase, leftPhrase.body.length),
+      ...getRightSideXYPosition(parentPhrase, leftPhrase.body.length),
     })
 
     // repeat recursively...
-    setChildrenCoordinates({ id: leftPhrase.id, plainSentence, sentence })
-    setChildrenCoordinates({ id: rightPhrase.id, plainSentence, sentence })
+    setChildrenCoordinates({ parentId: leftPhrase.id, plainSentence, sentence })
+    setChildrenCoordinates({
+      parentId: rightPhrase.id,
+      plainSentence,
+      sentence,
+    })
   } else {
     // until no children is found
     return
@@ -140,7 +174,7 @@ export function convertPlainTreeToTreeWithCoordinates(
   setTopmostPhraseCoordinates({ plainSentence, sentence })
 
   setChildrenCoordinates({
-    id: sentence.phrases[0].id,
+    parentId: sentence.phrases[0].id,
     plainSentence,
     sentence,
   })

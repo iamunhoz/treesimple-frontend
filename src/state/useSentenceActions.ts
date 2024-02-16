@@ -1,9 +1,14 @@
 import { useAtom, useSetAtom } from "jotai"
 import { currentSentenceAtom, drawingLinesCoordinatesAtom } from "./atoms"
 import { LinesCoordinates, Phrase, Sentence } from "@/lib/definitions"
+import {
+  calculateParentXYLinePosition,
+  calculateThisPhraseXYLinePosition,
+  createLeftSideSplit,
+  createRigthSideSplit,
+} from "@/lib/sentence"
 
-export const useSentenceActions = (/* props: TuseSentenceActionsProps */) => {
-  // const { phraseId, parentPhraseId } = props
+export const useSentenceActions = () => {
   const [currentSentence, setCurrentSentence] = useAtom(currentSentenceAtom)
   const setDrawingLinesCoordinates = useSetAtom(drawingLinesCoordinatesAtom)
 
@@ -22,10 +27,31 @@ export const useSentenceActions = (/* props: TuseSentenceActionsProps */) => {
     setDrawingLinesCoordinates((prev) => [...prev, ...lines])
   }
 
+  const sendSplitToState = (currentPhrase: Phrase, splitterIdx: number) => {
+    const leftSide: Phrase = createLeftSideSplit(currentPhrase, splitterIdx)
+    const rightSide: Phrase = createRigthSideSplit(
+      currentPhrase,
+      splitterIdx,
+      leftSide.body.length
+    )
+    addPhrasesToCurrentSentence([leftSide, rightSide])
+    addLinesCoordinates([
+      {
+        ...calculateParentXYLinePosition(currentPhrase),
+        ...calculateThisPhraseXYLinePosition(leftSide),
+      },
+      {
+        ...calculateParentXYLinePosition(currentPhrase),
+        ...calculateThisPhraseXYLinePosition(rightSide),
+      },
+    ])
+  }
+
   return {
     currentSentence,
     replaceCurrentSentence,
     addPhrasesToCurrentSentence,
     addLinesCoordinates,
+    sendSplitToState,
   }
 }
