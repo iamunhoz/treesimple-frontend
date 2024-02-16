@@ -30,7 +30,12 @@ export function SentenceInputSection(): JSX.Element {
   }
 
   const handleSentenceImport = () => {
-    convertPlainTreeToTreeWithCoordinates(plainSentence)
+    const tree = convertPlainTreeToTreeWithCoordinates(plainSentence)
+    replaceCurrentSentence(tree.sentence)
+    router.push("/plotting")
+
+    // criar nova fn para aceitar tree com coordenadas
+    //replaceCurrentSentenceWithTree....
   }
 
   return (

@@ -3,6 +3,7 @@
 import { Phrase } from "@/lib/definitions"
 import { Y_INCREMENT } from "@/lib/sentence"
 import { getWidthFromCharLength } from "@/lib/strings"
+import { getLeftSideXYPosition, getRightSideXYPosition } from "@/lib/sentence"
 import { useSentenceActions } from "@/state/useSentenceActions"
 import { Box } from "@mui/material"
 import { nanoid } from "nanoid"
@@ -22,16 +23,18 @@ export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
     const leftSide: Phrase = {
       id: `leftside-${nanoid()}`,
       body: [...phraseWords].slice(0, idx).join(" "),
-      y: phrase.y + Y_INCREMENT,
-      x: phrase.x - 10,
+      /* y: phrase.y + Y_INCREMENT,
+      x: phrase.x - 10, */
+      ...getLeftSideXYPosition(phrase),
       parentId: phrase.id,
     }
     const rightSide: Phrase = {
       id: `rightside-${nanoid()}`,
       body: [...phraseWords].slice(idx).join(" "),
-      y: phrase.y + Y_INCREMENT,
+      /* y: phrase.y + Y_INCREMENT,
       // criar fusão desse '14' e o resultado de getWidthFromCharLength
-      x: phrase.x + 16 * leftSide.body.length,
+      x: phrase.x + 16 * leftSide.body.length, */
+      ...getRightSideXYPosition(phrase, leftSide.body.length),
       parentId: phrase.id,
     }
 

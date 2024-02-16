@@ -4,10 +4,12 @@ export type PlainPhrase = {
   parentId: string
 }
 
-export type Phrase = PlainPhrase & {
+export type Coordinates = {
   x: number
   y: number
 }
+
+export type Phrase = PlainPhrase & Coordinates
 
 export type PlainSentence = {
   id: string

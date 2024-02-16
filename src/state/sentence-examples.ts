@@ -87,7 +87,7 @@ export const plainSentence: PlainSentence = {
     {
       id: "1",
       body: "this is a model sentence",
-      parentId: "model",
+      parentId: "model-2",
     },
     {
       id: "leftside-dxZ09f_at_jRZ01Ndo1ye",
