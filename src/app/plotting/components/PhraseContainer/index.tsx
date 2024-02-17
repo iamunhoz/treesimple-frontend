@@ -38,7 +38,7 @@ export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
       }}
       id={phrase.id}
     >
-      <PhrasePin />
+      <PhrasePin phrase={phrase} />
       {phrase.body.split(" ").map((word, idx) => (
         <Fragment key={idx}>
           {idx > 0 && (

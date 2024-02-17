@@ -1,6 +1,11 @@
 import { useAtom, useSetAtom } from "jotai"
 import { currentSentenceAtom, drawingLinesCoordinatesAtom } from "./atoms"
-import { LinesCoordinates, Phrase, Sentence } from "@/lib/definitions"
+import {
+  LinesCoordinates,
+  Phrase,
+  PhraseType,
+  Sentence,
+} from "@/lib/definitions"
 import {
   calculateParentXYLinePosition,
   calculateThisPhraseXYLinePosition,
@@ -47,11 +52,21 @@ export const useSentenceActions = () => {
     ])
   }
 
+  const setPhraseType = (phraseId: string, type: PhraseType) => {
+    setCurrentSentence((prev) => ({
+      id: prev.id,
+      phrases: prev.phrases.map((phrase) =>
+        phrase.id === phraseId ? { ...phrase, type } : phrase
+      ),
+    }))
+  }
+
   return {
     currentSentence,
     replaceCurrentSentence,
     addPhrasesToCurrentSentence,
     addLinesCoordinates,
     sendSplitToState,
+    setPhraseType,
   }
 }

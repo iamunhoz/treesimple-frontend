@@ -1,21 +1,18 @@
 "use client"
 
-import { PhraseType } from "@/lib/definitions"
+import { Phrase } from "@/lib/definitions"
 import { PHRASE_TYPES_LIST } from "@/lib/sentence"
-import {
-  Box,
-  Button,
-  IconButton,
-  List,
-  ListItem,
-  Popover,
-  Typography,
-} from "@mui/material"
-import { useRef, useState } from "react"
+import { useSentenceActions } from "@/state/useSentenceActions"
+import { Box, Button, IconButton, List, ListItem, Popover } from "@mui/material"
+import { useState } from "react"
 
-export function PhrasePin(): JSX.Element {
+type PhrasePinProps = {
+  phrase: Phrase
+}
+export function PhrasePin(props: PhrasePinProps): JSX.Element {
+  const { phrase } = props
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
-  const [phraseType, setPhraseType] = useState<PhraseType | undefined>()
+  const { setPhraseType } = useSentenceActions()
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -46,7 +43,7 @@ export function PhrasePin(): JSX.Element {
           xmlns="http://www.w3.org/2000/svg"
         >
           <circle cx="12" cy="12" r="10" stroke="orange" stroke-width="2" />
-          {phraseType && (
+          {phrase.type && (
             <text
               x="50%"
               y="50%"
@@ -56,7 +53,7 @@ export function PhrasePin(): JSX.Element {
               fontSize="1.2rem"
               fontFamily="Poppins"
             >
-              {phraseType.shortName}
+              {phrase.type.shortName}
             </text>
           )}
         </svg>
@@ -98,7 +95,7 @@ export function PhrasePin(): JSX.Element {
               <Button
                 variant="text"
                 onClick={() => {
-                  setPhraseType(type)
+                  setPhraseType(phrase.id, type)
                   handleClose()
                 }}
               >

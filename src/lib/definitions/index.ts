@@ -1,18 +1,18 @@
+export type PhraseType = {
+  longName: string
+  shortName: string
+}
+
 export type PlainPhrase = {
   id: string
   body: string
   parentId: string
+  type?: PhraseType
 }
 
 export type Coordinates = {
   x: number
   y: number
-}
-
-export type PhraseType = {
-  longName: string
-  shortName: string
-  color?: string
 }
 
 export type Phrase = PlainPhrase & Coordinates
