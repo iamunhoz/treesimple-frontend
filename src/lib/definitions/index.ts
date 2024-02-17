@@ -9,6 +9,12 @@ export type Coordinates = {
   y: number
 }
 
+export type PhraseType = {
+  longName: string
+  shortName: string
+  color?: string
+}
+
 export type Phrase = PlainPhrase & Coordinates
 
 export type PlainSentence = {

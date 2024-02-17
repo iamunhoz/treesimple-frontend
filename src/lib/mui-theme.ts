@@ -10,8 +10,25 @@ export const overridedMuiTheme = createTheme({
     fontFamily: poppins.style.fontFamily,
     button: {
       textTransform: "none",
-      color: "white",
-      border: "2px solid orange",
+      // border: "2px solid orange",
+    },
+  },
+  components: {
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          color: "rgb(var(--foreground-rgb))",
+          // backgroundColor: "rgb(var(--background-rgb))",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: "rgb(var(--foreground-rgb))",
+          // backgroundColor: "rgb(var(--background-rgb))",
+        },
+      },
     },
   },
 })

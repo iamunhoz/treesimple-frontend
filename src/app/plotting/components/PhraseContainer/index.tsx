@@ -6,6 +6,7 @@ import { getWidthFromCharLength } from "@/lib/strings"
 import { useSentenceActions } from "@/state/useSentenceActions"
 import { Box } from "@mui/material"
 import { Fragment, useState } from "react"
+import { PhrasePin } from ".."
 
 type PhraseContainerProps = {
   phrase: Phrase
@@ -37,6 +38,7 @@ export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
       }}
       id={phrase.id}
     >
+      <PhrasePin />
       {phrase.body.split(" ").map((word, idx) => (
         <Fragment key={idx}>
           {idx > 0 && (

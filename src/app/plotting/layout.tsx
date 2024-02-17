@@ -1,6 +1,6 @@
 "use client"
 
-import { currentSentenceAtom, drawingLinesCoordinatesAtom } from "@/state/atoms"
+// import { currentSentenceAtom, drawingLinesCoordinatesAtom } from "@/state/atoms"
 import { Box, Button } from "@mui/material"
 import { useAtomValue } from "jotai"
 import Link from "next/link"
@@ -10,8 +10,8 @@ export default function PlottingLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const currentSentence = useAtomValue(currentSentenceAtom)
-  const drawingLinesCoordinate = useAtomValue(drawingLinesCoordinatesAtom)
+  // const currentSentence = useAtomValue(currentSentenceAtom)
+  // const drawingLinesCoordinate = useAtomValue(drawingLinesCoordinatesAtom)
   return (
     <Box
       sx={{

@@ -4,6 +4,7 @@ import { nanoid } from "nanoid"
 import {
   Coordinates,
   Phrase,
+  PhraseType,
   PlainSentence,
   Sentence,
   TreeWithCoordinates,
@@ -186,3 +187,14 @@ export function convertPlainTreeToTreeWithCoordinates(
     lines,
   }
 }
+
+export const PHRASE_TYPES_LIST: PhraseType[] = [
+  {
+    longName: "Verb Phrase",
+    shortName: "VP",
+  },
+  {
+    longName: "Noun Phrase",
+    shortName: "NP",
+  },
+]
