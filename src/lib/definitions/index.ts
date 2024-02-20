@@ -42,3 +42,17 @@ export type TreeWithCoordinates = {
   sentence: Sentence
   lines: LinesCoordinates[]
 }
+
+export type LoginDTO = {
+  email: string
+  password: string
+}
+
+export type LoginResponse = {
+  apiMessage: {
+    accessToken: string
+    foundUser: boolean
+    refreshToken: string
+  }
+  status: string
+}

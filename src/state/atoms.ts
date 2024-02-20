@@ -2,11 +2,15 @@
 
 import { LinesCoordinates, Sentence } from "@/lib/definitions"
 import { atom } from "jotai"
-import { getSentenceData } from "./sentence-examples"
+import { atomWithStorage } from "jotai/utils"
 
+// project data
 export const currentSentenceAtom = atom<Sentence>({
-  id: "model-2",
-  phrases: [getSentenceData()],
+  id: "",
+  phrases: [],
 })
 
 export const drawingLinesCoordinatesAtom = atom<LinesCoordinates[]>([])
+
+// system data
+export const jwtAtom = atomWithStorage<string | undefined>("jwt", undefined)

@@ -5,6 +5,7 @@ import { Header } from "./components"
 import { Box, ThemeProvider } from "@mui/material"
 import { overridedMuiTheme } from "@/lib/mui-theme"
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter"
+import { DevTools } from "jotai-devtools"
 
 export const metadata: Metadata = {
   title: "TreeSimple",

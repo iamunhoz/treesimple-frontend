@@ -30,7 +30,7 @@ export function calculateThisPhraseXYLinePosition(phrase: Phrase) {
 }
 
 export function getXCenterPosition(bodyLength: number) {
-  return window.innerWidth / 2 - bodyLength * 6
+  return window.innerWidth / 2 - bodyLength * 4
 }
 
 export const getLeftSideXYPosition = (phrase: Phrase): Coordinates => {

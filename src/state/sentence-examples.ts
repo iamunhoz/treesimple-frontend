@@ -141,15 +141,15 @@ export const plainSentence: PlainSentence = {
 } */
 
 export const getSentenceData = () => {
+  const body = "this is a model sentence"
   const phrase = {
     id: "1",
-    body: "this is a model sentence",
+    body,
     parentId: "model",
-    x: 0,
+    x:
+      window && window.innerWidth ? window.innerWidth / 2 - body.length * 6 : 0,
     y: 25,
   }
-
-  phrase.x = window.innerWidth / 2 - phrase.body.length * 6
 
   return phrase
 }

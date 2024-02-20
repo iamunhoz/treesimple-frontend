@@ -61,6 +61,15 @@ export const useSentenceActions = () => {
     }))
   }
 
+  const resetAppState = () => {
+    setCurrentSentence({
+      id: "",
+      phrases: [],
+    })
+
+    setDrawingLinesCoordinates([])
+  }
+
   return {
     currentSentence,
     replaceCurrentSentence,
@@ -68,5 +77,6 @@ export const useSentenceActions = () => {
     addLinesCoordinates,
     sendSplitToState,
     setPhraseType,
+    resetAppState,
   }
 }
