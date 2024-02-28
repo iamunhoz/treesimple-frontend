@@ -77,3 +77,13 @@ export type SentenceResponse = {
   apiMessage: unknown
   status: ResponseStatus
 }
+
+export type GetSentenceResponse =
+  | {
+      status: ResponseStatus.sucesso
+      apiMessage: PlainSentence[]
+    }
+  | {
+      status: ResponseStatus.erro
+      apiMessage: unknown
+    }

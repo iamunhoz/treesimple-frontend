@@ -11,7 +11,7 @@ import {
 } from "./definitions"
 import { getWidthFromCharLength } from "./strings"
 
-export const TOPMOST_PHRASE_Y = 25
+export const TOPMOST_PHRASE_Y = 75
 export const Y_INCREMENT = 75
 export const PHRASE_BODY_HEIGHT = 30
 
@@ -30,7 +30,7 @@ export function calculateThisPhraseXYLinePosition(phrase: Phrase) {
 }
 
 export function getXCenterPosition(bodyLength: number) {
-  return window.innerWidth / 2 - bodyLength * 4
+  return window.innerWidth / 2 - bodyLength * 7
 }
 
 export const getLeftSideXYPosition = (phrase: Phrase): Coordinates => {

@@ -1,5 +1,9 @@
+"use client"
+
 import { Box } from "@mui/material"
 import { ExplanationSection, SentenceInputSection } from "./components"
+import { QueryClientProvider } from "@tanstack/react-query"
+import { queryClient } from "@/lib/api"
 
 export default function Home() {
   return (
@@ -17,7 +21,9 @@ export default function Home() {
       }}
     >
       <SentenceInputSection />
-      <ExplanationSection />
+      <QueryClientProvider client={queryClient}>
+        <ExplanationSection />
+      </QueryClientProvider>
     </Box>
   )
 }

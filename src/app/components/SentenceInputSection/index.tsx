@@ -1,6 +1,9 @@
 "use client"
 
-import { convertPlainTreeToTreeWithCoordinates } from "@/lib/sentence"
+import {
+  convertPlainTreeToTreeWithCoordinates,
+  getXCenterPosition,
+} from "@/lib/sentence"
 import { plainSentence } from "@/state/sentence-examples"
 import { useSentenceActions } from "@/state/useSentenceActions"
 import { Box, Button, Input } from "@mui/material"
@@ -79,7 +82,6 @@ function getSentenceData(body: string, parentId: string) {
     y: 75,
   }
 
-  phrase.x = window.innerWidth / 2 - phrase.body.length * 7 // talvez esse 7 precise de normalização
-
+  phrase.x = getXCenterPosition(body.length)
   return phrase
 }
