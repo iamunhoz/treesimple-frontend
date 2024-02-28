@@ -30,7 +30,10 @@ export default function Signup(): JSX.Element {
   const { mutate, isPending } = useMutation({
     mutationKey: [ApiPaths.signup],
     mutationFn: async (dto: SignupDTO) => {
-      const response = await post<LoginResponse>(ApiPaths.signup, dto)
+      const response = await post<LoginResponse>({
+        path: ApiPaths.signup,
+        body: dto,
+      })
       if (response.status === ResponseStatus.sucesso) {
         return
       } else if (response.status === ResponseStatus.erro) {
