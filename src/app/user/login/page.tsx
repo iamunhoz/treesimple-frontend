@@ -31,7 +31,10 @@ export default function Login(): JSX.Element {
   const { mutate, isPending } = useMutation({
     mutationKey: [ApiPaths.login],
     mutationFn: async (dto: LoginDTO) => {
-      const response = await post<LoginResponse>(ApiPaths.login, dto)
+      const response = await post<LoginResponse>({
+        path: ApiPaths.login,
+        body: dto,
+      })
       if (response.status === ResponseStatus.sucesso) {
         setJwt(response.apiMessage.accessToken)
 

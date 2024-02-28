@@ -2,6 +2,7 @@
 
 import { ApiPaths, ResponseStatus, post } from "@/lib/api"
 import { SentenceDTO, SentenceResponse } from "@/lib/definitions"
+import { convertSentenceWithCoordinatesToPlainSentence } from "@/lib/sentence"
 import { currentSentenceAtom } from "@/state/atoms"
 import { Button } from "@mui/material"
 import { useMutation } from "@tanstack/react-query"
@@ -14,7 +15,7 @@ export function BtnSaveSentence() {
     mutationFn: async (dto: SentenceDTO) => {
       const response = await post<SentenceResponse>({
         path: ApiPaths.sentence,
-        body: dto,
+        body: convertSentenceWithCoordinatesToPlainSentence(dto),
         sendAuth: true,
       })
       if (response.status === ResponseStatus.sucesso) {

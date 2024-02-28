@@ -77,5 +77,3 @@ export type SentenceResponse = {
   apiMessage: unknown
   status: ResponseStatus
 }
-
-// TESTE GIT REMOTE 2

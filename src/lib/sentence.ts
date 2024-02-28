@@ -188,6 +188,20 @@ export function convertPlainTreeToTreeWithCoordinates(
   }
 }
 
+export function convertSentenceWithCoordinatesToPlainSentence(
+  sentence: Sentence
+): PlainSentence {
+  return {
+    id: sentence.id,
+    phrases: sentence.phrases.map((phrase) => ({
+      id: phrase.id,
+      body: phrase.body,
+      parentId: phrase.parentId,
+      type: phrase.type,
+    })),
+  }
+}
+
 export const PHRASE_TYPES_LIST: PhraseType[] = [
   {
     longName: "Verb Phrase",
