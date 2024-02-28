@@ -76,10 +76,10 @@ function getSentenceData(body: string, parentId: string) {
     body,
     parentId,
     x: 0,
-    y: 25,
+    y: 75,
   }
 
-  phrase.x = window.innerWidth / 2 - phrase.body.length * 6
+  phrase.x = window.innerWidth / 2 - phrase.body.length * 7 // talvez esse 7 precise de normalização
 
   return phrase
 }

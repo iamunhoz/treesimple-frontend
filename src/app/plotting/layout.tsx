@@ -1,21 +1,19 @@
 "use client"
 
-import { useSentenceActions } from "@/state/useSentenceActions"
-import { Box, Button } from "@mui/material"
-import Link from "next/link"
-import { DevTools } from "jotai-devtools"
+import { Box } from "@mui/material"
+import {
+  BtnBackToSentenceInput,
+  BtnSaveSentence,
+  JotaiDevTools,
+} from "../components"
+import { QueryClientProvider } from "@tanstack/react-query"
+import { queryClient } from "@/lib/api"
 
 export default function PlottingLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const { resetAppState } = useSentenceActions()
-
-  const handleSalvar = () => {
-    // aguardando endpoint Sentence ser criado
-  }
-
   return (
     <Box
       sx={{
@@ -31,25 +29,12 @@ export default function PlottingLayout({
           right: 0,
         }}
       >
-        <Button
-          LinkComponent={Link}
-          href="/"
-          onClick={resetAppState}
-          sx={{
-            color: "white",
-            fontSize: "1rem",
-            width: "1.5rem",
-            height: "2.4rem",
-            p: 0,
-          }}
-        >
-          Voltar
-        </Button>
-        <Button variant="contained" onClick={handleSalvar}>
-          Salvar
-        </Button>
+        <BtnBackToSentenceInput />
+        <QueryClientProvider client={queryClient}>
+          <BtnSaveSentence />
+        </QueryClientProvider>
       </Box>
-      <DevTools theme="dark" />
+      <JotaiDevTools />
     </Box>
   )
 }

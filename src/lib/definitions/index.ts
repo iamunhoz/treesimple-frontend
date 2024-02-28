@@ -70,3 +70,10 @@ export type SignupDTO = {
   password: string
   role: UserRole
 }
+
+export type SentenceDTO = Sentence
+
+export type SentenceResponse = {
+  apiMessage: unknown
+  status: ResponseStatus
+}

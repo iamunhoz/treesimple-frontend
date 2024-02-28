@@ -92,14 +92,14 @@ export default function Signup(): JSX.Element {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          onKeyPress={handleEnterKeyPress}
+          onKeyDown={handleEnterKeyPress}
         />
         <TextField
           label="e-mail"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          onKeyPress={handleEnterKeyPress}
+          onKeyDown={handleEnterKeyPress}
         />
         <TextField
           label="password"
@@ -107,7 +107,7 @@ export default function Signup(): JSX.Element {
           value={password}
           error={passwordsDontMatch}
           onChange={(e) => setPassword(e.target.value)}
-          onKeyPress={handleEnterKeyPress}
+          onKeyDown={handleEnterKeyPress}
         />
         <TextField
           label="retype password"
@@ -115,7 +115,7 @@ export default function Signup(): JSX.Element {
           value={retypedPassword}
           error={passwordsDontMatch}
           onChange={(e) => setRetypedPassword(e.target.value)}
-          onKeyPress={handleEnterKeyPress}
+          onKeyDown={handleEnterKeyPress}
         />
         {showBannerUserCreationSuccess ? (
           <Alert

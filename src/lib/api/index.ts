@@ -25,16 +25,30 @@ const handleError = (error: any) => {
 type RequestMethod = "get" | "put" | "post" | "delete"
 
 // Define generic function to make requests
-const makeRequest = async <T>(
-  method: RequestMethod,
-  path: string,
+type MakeRequestParams = {
+  method: RequestMethod
+  path: string
   body?: any
-): Promise<T> => {
+  sendAuth?: boolean
+}
+const makeRequest = async <T>({
+  method,
+  path,
+  body,
+  sendAuth,
+}: MakeRequestParams): Promise<T> => {
   try {
     const response: AxiosResponse<T> = await instance.request<T>({
       method,
       url: path,
       data: body,
+      headers: sendAuth
+        ? {
+            Authorization: `Bearer ${localStorage
+              .getItem("jwt")
+              ?.replaceAll('"', "")}`,
+          }
+        : {},
     })
     return response.data
   } catch (error) {
@@ -46,6 +60,7 @@ enum ApiPaths {
   user = "user",
   login = "user/login",
   signup = "user/signup",
+  sentence = "sentence",
 }
 
 enum ResponseStatus {
@@ -56,15 +71,42 @@ enum ResponseStatus {
 const queryClient = new QueryClient()
 
 // Define functions for each HTTP method
-const get = <T>(path: string): Promise<T> => makeRequest<T>("get", path)
+const get = <T>({
+  path,
+  sendAuth,
+}: {
+  path: string
+  sendAuth?: boolean
+}): Promise<T> => makeRequest<T>({ method: "get", path, sendAuth })
 
-const put = <T>(path: string, body: any): Promise<T> =>
-  makeRequest<T>("put", path, body)
+const put = <T>({
+  path,
+  body,
+  sendAuth,
+}: {
+  path: string
+  body: any
+  sendAuth?: boolean
+}): Promise<T> => makeRequest<T>({ method: "put", path, body, sendAuth })
 
-const post = <T>(path: string, body: any): Promise<T> =>
-  makeRequest<T>("post", path, body)
+const post = <T>({
+  path,
+  body,
+  sendAuth,
+}: {
+  path: string
+  body: any
+  sendAuth?: boolean
+}): Promise<T> => makeRequest<T>({ method: "post", path, body, sendAuth })
 
-const del = <T>(path: string, body?: any): Promise<T> =>
-  makeRequest<T>("delete", path, body)
+const del = <T>({
+  path,
+  body,
+  sendAuth,
+}: {
+  path: string
+  body?: any
+  sendAuth?: boolean
+}): Promise<T> => makeRequest<T>({ method: "delete", path, body, sendAuth })
 
 export { get, put, post, del, ApiPaths, queryClient, ResponseStatus }

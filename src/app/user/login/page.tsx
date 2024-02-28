@@ -47,7 +47,7 @@ export default function Login(): JSX.Element {
       }
     },
     onSuccess: () => {
-      // router.push("/")
+      router.push("/")
     },
   })
 
@@ -92,14 +92,14 @@ export default function Login(): JSX.Element {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyPress}
         />
         <TextField
           label="password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyPress}
         />
         <Button variant="contained" onClick={handleSubmit}>
           Send
