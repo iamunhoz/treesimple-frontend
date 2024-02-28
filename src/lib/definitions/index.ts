@@ -1,3 +1,5 @@
+import { ResponseStatus } from "../api"
+
 export type PhraseType = {
   longName: string
   shortName: string
@@ -54,5 +56,17 @@ export type LoginResponse = {
     foundUser: boolean
     refreshToken: string
   }
-  status: string
+  status: ResponseStatus
+}
+
+export enum UserRole {
+  student = "student",
+  teacher = "teacher",
+}
+
+export type SignupDTO = {
+  name: string
+  email: string
+  password: string
+  role: UserRole
 }

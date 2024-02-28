@@ -1,17 +1,29 @@
 "use client"
 
-import { ApiPaths, post } from "@/lib/api"
+import { ApiPaths, ResponseStatus, post } from "@/lib/api"
 import { LoginDTO, LoginResponse } from "@/lib/definitions"
 import { jwtAtom } from "@/state/atoms"
-import { Box, Button, CircularProgress, Paper, TextField } from "@mui/material"
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material"
 import { useMutation } from "@tanstack/react-query"
 import { useSetAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import { KeyboardEventHandler, useState } from "react"
+import { NoAccountsOutlined } from "@mui/icons-material"
+import { jwtDecode } from "jwt-decode"
+import Link from "next/link"
 
 export default function Login(): JSX.Element {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [userNotFound, setUserNotFound] = useState(false)
   const router = useRouter()
 
   const setJwt = useSetAtom(jwtAtom)
@@ -20,14 +32,22 @@ export default function Login(): JSX.Element {
     mutationKey: [ApiPaths.login],
     mutationFn: async (dto: LoginDTO) => {
       const response = await post<LoginResponse>(ApiPaths.login, dto)
-      console.log({ response })
-
-      if (response.status === "sucesso") {
+      if (response.status === ResponseStatus.sucesso) {
         setJwt(response.apiMessage.accessToken)
+
+        console.log({ user: jwtDecode(response.apiMessage.accessToken) })
+
+        setUserNotFound(false)
+      } else if (
+        response.status === ResponseStatus.erro &&
+        !response.apiMessage.foundUser
+      ) {
+        setJwt(undefined)
+        setUserNotFound(true)
       }
     },
     onSuccess: () => {
-      router.push("/")
+      // router.push("/")
     },
   })
 
@@ -51,8 +71,9 @@ export default function Login(): JSX.Element {
       <Paper
         sx={{
           background: "white",
-          width: "400px",
-          height: "400px",
+          minWidth: "400px",
+          minHeight: "400px",
+          padding: "40px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -64,6 +85,8 @@ export default function Login(): JSX.Element {
           },
         }}
       >
+        <Typography variant="h4">Login</Typography>
+
         <TextField
           label="e-mail"
           type="email"
@@ -79,9 +102,20 @@ export default function Login(): JSX.Element {
           onKeyPress={handleKeyPress}
         />
         <Button variant="contained" onClick={handleSubmit}>
-          Log In
+          Send
         </Button>
         {isPending && <CircularProgress />}
+        {userNotFound && (
+          <Alert
+            icon={<NoAccountsOutlined fontSize="inherit" />}
+            severity="error"
+          >
+            Nenhum cadastro encontrado com estas credenciais
+          </Alert>
+        )}
+        <Typography>
+          New Here? <Link href="/user/signup">Create an account</Link>
+        </Typography>
       </Paper>
     </Box>
   )

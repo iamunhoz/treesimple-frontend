@@ -33,7 +33,7 @@ export function UserMenu(props: BoxProps): JSX.Element {
               x2="21"
               y2="12"
               stroke="rgb(var(--foreground-rgb))"
-              stroke-width="2"
+              strokeWidth="2"
             />
             <line
               x1="3"
@@ -41,7 +41,7 @@ export function UserMenu(props: BoxProps): JSX.Element {
               x2="21"
               y2="6"
               stroke="rgb(var(--foreground-rgb))"
-              stroke-width="2"
+              strokeWidth="2"
             />
             <line
               x1="3"
@@ -49,14 +49,19 @@ export function UserMenu(props: BoxProps): JSX.Element {
               x2="21"
               y2="18"
               stroke="rgb(var(--foreground-rgb))"
-              stroke-width="2"
+              strokeWidth="2"
             />
           </svg>
         </IconButton>
       ) : (
-        <Button LinkComponent={Link} href="/login">
-          Login
-        </Button>
+        <>
+          <Button LinkComponent={Link} href="/user/login">
+            Login
+          </Button>
+          <Button LinkComponent={Link} href="/user/signup">
+            Signup
+          </Button>
+        </>
       )}
     </Box>
   )

@@ -2,9 +2,15 @@ import { QueryClient } from "@tanstack/react-query"
 import axios, { AxiosResponse } from "axios"
 
 // Define base URL or any other configuration you may need
-const baseURL = "https://tree-simple-server.up.railway.app" // Replace with your API base URL
-
+//const baseURL = "https://tree-simple-server.up.railway.app" // Replace with your API base URL
+const baseURL =
+  // @ts-ignore
+  process.env.NEXT_PUBLIC_TREE_SIMPLE_API_HOST &&
+  process.env.NEXT_PUBLIC_TREE_SIMPLE_API_HOST === "localhost"
+    ? "http://localhost:3003"
+    : "https://tree-simple-server.up.railway.app"
 // Create Axios instance with base URL
+
 const instance = axios.create({
   baseURL,
 })
@@ -39,6 +45,12 @@ const makeRequest = async <T>(
 enum ApiPaths {
   user = "user",
   login = "user/login",
+  signup = "user/signup",
+}
+
+enum ResponseStatus {
+  sucesso = "sucesso",
+  erro = "erro",
 }
 
 const queryClient = new QueryClient()
@@ -55,4 +67,4 @@ const post = <T>(path: string, body: any): Promise<T> =>
 const del = <T>(path: string, body?: any): Promise<T> =>
   makeRequest<T>("delete", path, body)
 
-export { get, put, post, del, ApiPaths, queryClient }
+export { get, put, post, del, ApiPaths, queryClient, ResponseStatus }
