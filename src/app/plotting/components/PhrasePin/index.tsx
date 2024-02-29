@@ -43,7 +43,7 @@ export function PhrasePin(props: PhrasePinProps): JSX.Element {
           xmlns="http://www.w3.org/2000/svg"
         >
           <circle cx="12" cy="12" r="10" stroke="orange" strokeWidth="2" />
-          {phrase.type && (
+          {phrase.phraseType && (
             <text
               x="50%"
               y="50%"
@@ -53,7 +53,7 @@ export function PhrasePin(props: PhrasePinProps): JSX.Element {
               fontSize="1.2rem"
               fontFamily="Poppins"
             >
-              {phrase.type.shortName}
+              {phrase.phraseType.shortCode}
             </text>
           )}
         </svg>
@@ -86,7 +86,7 @@ export function PhrasePin(props: PhrasePinProps): JSX.Element {
         >
           {PHRASE_TYPES_LIST.map((type, idx) => (
             <ListItem
-              key={type.shortName}
+              key={type.code}
               sx={{
                 borderTop: idx > 0 ? "2px solid orange" : undefined,
                 p: 0,
@@ -99,7 +99,7 @@ export function PhrasePin(props: PhrasePinProps): JSX.Element {
                   handleClose()
                 }}
               >
-                {type.shortName} - {type.longName}
+                {type.longName}
               </Button>
             </ListItem>
           ))}

@@ -1,8 +1,8 @@
 "use client"
 
 import { ApiPaths, ResponseStatus, post } from "@/lib/api"
-import { SentenceDTO, SentenceResponse } from "@/lib/definitions"
-import { convertSentenceWithCoordinatesToPlainSentence } from "@/lib/sentence"
+import { Sentence, SentenceDTO, SentenceResponse } from "@/lib/definitions"
+import { convertSentenceWithCoordinatesToSentenceDTO } from "@/lib/sentence"
 import { currentSentenceAtom } from "@/state/atoms"
 import { Button } from "@mui/material"
 import { useMutation } from "@tanstack/react-query"
@@ -12,10 +12,11 @@ export function BtnSaveSentence() {
   const sentence = useAtomValue(currentSentenceAtom)
   const { mutate, isPending } = useMutation({
     mutationKey: [ApiPaths.sentence],
-    mutationFn: async (dto: SentenceDTO) => {
-      const response = await post<SentenceResponse>({
+    mutationFn: async (sentence: Sentence) => {
+      const dto = convertSentenceWithCoordinatesToSentenceDTO(sentence)
+      const response = await post<SentenceResponse, SentenceDTO>({
         path: ApiPaths.sentence,
-        body: convertSentenceWithCoordinatesToPlainSentence(dto),
+        dto,
         sendAuth: true,
       })
       if (response.status === ResponseStatus.sucesso) {

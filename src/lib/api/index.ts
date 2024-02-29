@@ -25,23 +25,23 @@ const handleError = (error: any) => {
 type RequestMethod = "get" | "put" | "post" | "delete"
 
 // Define generic function to make requests
-type MakeRequestParams = {
+type MakeRequestParams<D> = {
   method: RequestMethod
   path: string
-  body?: any
+  dto?: D
   sendAuth?: boolean
 }
-const makeRequest = async <T>({
+const makeRequest = async <T, D>({
   method,
   path,
-  body,
+  dto,
   sendAuth,
-}: MakeRequestParams): Promise<T> => {
+}: MakeRequestParams<D>): Promise<T> => {
   try {
     const response: AxiosResponse<T> = await instance.request<T>({
       method,
       url: path,
-      data: body,
+      data: dto,
       headers: sendAuth
         ? {
             Authorization: `Bearer ${localStorage
@@ -77,36 +77,36 @@ const get = <T>({
 }: {
   path: string
   sendAuth?: boolean
-}): Promise<T> => makeRequest<T>({ method: "get", path, sendAuth })
+}): Promise<T> => makeRequest<T, {}>({ method: "get", path, sendAuth })
 
-const put = <T>({
+const put = <T, D>({
   path,
-  body,
+  dto,
   sendAuth,
 }: {
   path: string
-  body: any
+  dto: D
   sendAuth?: boolean
-}): Promise<T> => makeRequest<T>({ method: "put", path, body, sendAuth })
+}): Promise<T> => makeRequest<T, D>({ method: "put", path, dto, sendAuth })
 
-const post = <T>({
+const post = <T, D>({
   path,
-  body,
+  dto,
   sendAuth,
 }: {
   path: string
-  body: any
+  dto: D
   sendAuth?: boolean
-}): Promise<T> => makeRequest<T>({ method: "post", path, body, sendAuth })
+}): Promise<T> => makeRequest<T, D>({ method: "post", path, dto, sendAuth })
 
-const del = <T>({
+const del = <T, D>({
   path,
-  body,
+  dto,
   sendAuth,
 }: {
   path: string
-  body?: any
+  dto?: D
   sendAuth?: boolean
-}): Promise<T> => makeRequest<T>({ method: "delete", path, body, sendAuth })
+}): Promise<T> => makeRequest<T, D>({ method: "delete", path, dto, sendAuth })
 
 export { get, put, post, del, ApiPaths, queryClient, ResponseStatus }

@@ -31,9 +31,9 @@ export default function Login(): JSX.Element {
   const { mutate, isPending } = useMutation({
     mutationKey: [ApiPaths.login],
     mutationFn: async (dto: LoginDTO) => {
-      const response = await post<LoginResponse>({
+      const response = await post<LoginResponse, LoginDTO>({
         path: ApiPaths.login,
-        body: dto,
+        dto,
       })
       if (response.status === ResponseStatus.sucesso) {
         setJwt(response.apiMessage.accessToken)
@@ -41,12 +41,14 @@ export default function Login(): JSX.Element {
         console.log({ user: jwtDecode(response.apiMessage.accessToken) })
 
         setUserNotFound(false)
+        return
       } else if (
         response.status === ResponseStatus.erro &&
         !response.apiMessage.foundUser
       ) {
         setJwt(undefined)
         setUserNotFound(true)
+        throw new Error("unable to comply")
       }
     },
     onSuccess: () => {

@@ -1,10 +1,6 @@
 "use client"
 
-import {
-  convertPlainTreeToTreeWithCoordinates,
-  getXCenterPosition,
-} from "@/lib/sentence"
-import { plainSentence } from "@/state/sentence-examples"
+import { getXCenterPosition } from "@/lib/sentence"
 import { useSentenceActions } from "@/state/useSentenceActions"
 import { Box, Button, Input } from "@mui/material"
 import { nanoid } from "nanoid"
@@ -12,7 +8,7 @@ import { useRouter } from "next/navigation"
 import { ChangeEventHandler, useState } from "react"
 
 export function SentenceInputSection(): JSX.Element {
-  const { replaceCurrentSentence, addLinesCoordinates } = useSentenceActions()
+  const { replaceCurrentSentence } = useSentenceActions()
   const [rawSentence, setRawSentence] = useState(
     "The bastard yellow rabbit is here"
   )
@@ -29,13 +25,6 @@ export function SentenceInputSection(): JSX.Element {
       id: thisId,
       phrases: [sentence],
     })
-    router.push("/plotting")
-  }
-
-  const handleSentenceImport = () => {
-    const tree = convertPlainTreeToTreeWithCoordinates(plainSentence)
-    replaceCurrentSentence(tree.sentence)
-    addLinesCoordinates(tree.lines)
     router.push("/plotting")
   }
 
@@ -67,8 +56,6 @@ export function SentenceInputSection(): JSX.Element {
         }}
       />
       <Button onClick={handleStartButtonClick}>Start</Button>
-
-      <Button onClick={handleSentenceImport}>Test sentence import</Button>
     </Box>
   )
 }

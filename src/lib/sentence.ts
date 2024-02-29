@@ -5,8 +5,11 @@ import {
   Coordinates,
   Phrase,
   PhraseType,
+  PhraseTypeCode,
+  PhraseTypeShortCode,
   PlainSentence,
   Sentence,
+  SentenceDTO,
   TreeWithCoordinates,
 } from "./definitions"
 import { getWidthFromCharLength } from "./strings"
@@ -81,7 +84,7 @@ function setTopmostPhraseCoordinates({
   plainSentence,
   sentence,
 }: {
-  plainSentence: PlainSentence
+  plainSentence: SentenceDTO
   sentence: Sentence
 }) {
   plainSentence.phrases.forEach((phrase) => {
@@ -90,6 +93,7 @@ function setTopmostPhraseCoordinates({
         ...phrase,
         y: TOPMOST_PHRASE_Y,
         x: getXCenterPosition(phrase.body.length),
+        phraseType: convertPhraseTypeCodeToPhraseType(phrase.phraseType),
       })
     }
   })
@@ -101,7 +105,7 @@ function setChildrenCoordinates({
   sentence,
 }: {
   parentId: string
-  plainSentence: PlainSentence
+  plainSentence: SentenceDTO
   sentence: Sentence
 }) {
   const parentPhrase = sentence.phrases.filter(
@@ -123,11 +127,13 @@ function setChildrenCoordinates({
     sentence.phrases.push({
       ...leftPhrase,
       ...getLeftSideXYPosition(parentPhrase),
+      phraseType: convertPhraseTypeCodeToPhraseType(leftPhrase.phraseType),
     })
 
     sentence.phrases.push({
       ...rightPhrase,
       ...getRightSideXYPosition(parentPhrase, leftPhrase.body.length),
+      phraseType: convertPhraseTypeCodeToPhraseType(rightPhrase.phraseType),
     })
 
     // repeat recursively...
@@ -164,8 +170,8 @@ function generateLinesFromPositionedPhrases(
   return lines
 }
 
-export function convertPlainTreeToTreeWithCoordinates(
-  plainSentence: PlainSentence
+export function convertSentenceDtoToTreeWithCoordinates(
+  plainSentence: SentenceDTO
 ): TreeWithCoordinates {
   const sentence: Sentence = {
     id: plainSentence.id,
@@ -188,27 +194,92 @@ export function convertPlainTreeToTreeWithCoordinates(
   }
 }
 
-export function convertSentenceWithCoordinatesToPlainSentence(
+export function convertSentenceWithCoordinatesToSentenceDTO(
   sentence: Sentence
-): PlainSentence {
+): SentenceDTO {
   return {
     id: sentence.id,
     phrases: sentence.phrases.map((phrase) => ({
       id: phrase.id,
       body: phrase.body,
       parentId: phrase.parentId,
-      type: phrase.type,
+      phraseType: phrase.phraseType?.code,
     })),
   }
 }
 
 export const PHRASE_TYPES_LIST: PhraseType[] = [
   {
-    longName: "Verb Phrase",
-    shortName: "VP",
+    longName: "Sentence",
+    code: PhraseTypeCode.Sentence,
+    shortCode: PhraseTypeShortCode.Sentence,
   },
   {
     longName: "Noun Phrase",
-    shortName: "NP",
+    code: PhraseTypeCode.NounP,
+    shortCode: PhraseTypeShortCode.NounP,
+  },
+  {
+    longName: "Noun",
+    code: PhraseTypeCode.Noun,
+    shortCode: PhraseTypeShortCode.Noun,
+  },
+  {
+    longName: "Verb Phrase",
+    code: PhraseTypeCode.VerbP,
+    shortCode: PhraseTypeShortCode.VerbP,
+  },
+  {
+    longName: "Verb",
+    code: PhraseTypeCode.Verb,
+    shortCode: PhraseTypeShortCode.Verb,
+  },
+  {
+    longName: "Adjective Phrase",
+    code: PhraseTypeCode.AdjectiveP,
+    shortCode: PhraseTypeShortCode.AdjectiveP,
+  },
+  {
+    longName: "Adjective",
+    code: PhraseTypeCode.Adjective,
+    shortCode: PhraseTypeShortCode.Adjective,
+  },
+  {
+    longName: "Preposition Phrase",
+    code: PhraseTypeCode.PrepositionP,
+    shortCode: PhraseTypeShortCode.PrepositionP,
+  },
+  {
+    longName: "Preposition",
+    code: PhraseTypeCode.Preposition,
+    shortCode: PhraseTypeShortCode.Preposition,
+  },
+  {
+    longName: "Determiner Phrase",
+    code: PhraseTypeCode.DeterminerP,
+    shortCode: PhraseTypeShortCode.DeterminerP,
+  },
+  {
+    longName: "Determiner",
+    code: PhraseTypeCode.Determiner,
+    shortCode: PhraseTypeShortCode.Determiner,
+  },
+  {
+    longName: "Adverb Phrase",
+    code: PhraseTypeCode.AdverbP,
+    shortCode: PhraseTypeShortCode.AdverbP,
+  },
+  {
+    longName: "Adverb",
+    code: PhraseTypeCode.Adverb,
+    shortCode: PhraseTypeShortCode.Adverb,
   },
 ]
+
+function convertPhraseTypeCodeToPhraseType(
+  phraseTypeCode: PhraseTypeCode | undefined
+): PhraseType | undefined {
+  return PHRASE_TYPES_LIST.find(
+    (phraseType) => phraseType.code === phraseTypeCode
+  )
+}

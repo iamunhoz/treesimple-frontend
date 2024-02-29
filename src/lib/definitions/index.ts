@@ -1,15 +1,57 @@
 import { ResponseStatus } from "../api"
 
+export enum PhraseTypeCode {
+  Sentence = "Sentence",
+  NounP = "NounP",
+  Noun = "Noun",
+  VerbP = "VerbP",
+  Verb = "Verb",
+  AdjectiveP = "AdjectiveP",
+  Adjective = "Adjective",
+  PrepositionP = "PrepositionP",
+  Preposition = "Preposition",
+  DeterminerP = "DeterminerP",
+  Determiner = "Determiner",
+  AdverbP = "AdverbP",
+  Adverb = "Adverb",
+  undefined = "undefined",
+}
+
+export enum PhraseTypeShortCode {
+  Sentence = "S",
+  NounP = "NP",
+  Noun = "N",
+  VerbP = "VP",
+  Verb = "V",
+  AdjectiveP = "AdjP",
+  Adjective = "Adj",
+  PrepositionP = "PP",
+  Preposition = "P",
+  DeterminerP = "DP",
+  Determiner = "D",
+  AdverbP = "AdvP",
+  Adverb = "Adv",
+  undefined = "undefined",
+}
+
 export type PhraseType = {
   longName: string
-  shortName: string
+  code: PhraseTypeCode
+  shortCode: PhraseTypeShortCode
 }
 
 export type PlainPhrase = {
   id: string
   body: string
   parentId: string
-  type?: PhraseType
+  phraseType?: PhraseType
+}
+
+export type PhraseDTO = {
+  id: string
+  body: string
+  parentId: string
+  phraseType?: PhraseTypeCode
 }
 
 export type Coordinates = {
@@ -71,7 +113,10 @@ export type SignupDTO = {
   role: UserRole
 }
 
-export type SentenceDTO = Sentence
+export type SentenceDTO = {
+  id: string
+  phrases: PhraseDTO[]
+}
 
 export type SentenceResponse = {
   apiMessage: unknown
@@ -81,7 +126,7 @@ export type SentenceResponse = {
 export type GetSentenceResponse =
   | {
       status: ResponseStatus.sucesso
-      apiMessage: PlainSentence[]
+      apiMessage: SentenceDTO[]
     }
   | {
       status: ResponseStatus.erro

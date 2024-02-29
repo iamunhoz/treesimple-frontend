@@ -1,11 +1,11 @@
-import { PlainSentence } from "@/lib/definitions"
-import { convertPlainTreeToTreeWithCoordinates } from "@/lib/sentence"
+import { PlainSentence, SentenceDTO } from "@/lib/definitions"
+import { convertSentenceDtoToTreeWithCoordinates } from "@/lib/sentence"
 import { useSentenceActions } from "@/state/useSentenceActions"
 import { Button, Card, Typography } from "@mui/material"
 import { useRouter } from "next/navigation"
 
 type CardSentenceSelectorProps = {
-  sentence: PlainSentence
+  sentence: SentenceDTO
 }
 export function CardSentenceSelector(
   props: CardSentenceSelectorProps
@@ -16,7 +16,7 @@ export function CardSentenceSelector(
   const router = useRouter()
 
   const loadSentence = () => {
-    const tree = convertPlainTreeToTreeWithCoordinates(sentence)
+    const tree = convertSentenceDtoToTreeWithCoordinates(sentence)
     replaceCurrentSentence(tree.sentence)
     addLinesCoordinates(tree.lines)
     router.push("/plotting")

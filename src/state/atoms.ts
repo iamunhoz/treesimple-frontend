@@ -5,12 +5,17 @@ import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 
 // project data
-export const currentSentenceAtom = atom<Sentence>({
+const currentSentenceAtom = atom<Sentence>({
   id: "",
   phrases: [],
 })
+currentSentenceAtom.debugLabel = "current-sentence"
 
-export const drawingLinesCoordinatesAtom = atom<LinesCoordinates[]>([])
+const drawingLinesCoordinatesAtom = atom<LinesCoordinates[]>([])
+drawingLinesCoordinatesAtom.debugLabel = "lines-coordinates"
 
 // system data
-export const jwtAtom = atomWithStorage<string | undefined>("jwt", undefined)
+const jwtAtom = atomWithStorage<string | undefined>("jwt", undefined)
+jwtAtom.debugLabel = "jwt"
+
+export { currentSentenceAtom, drawingLinesCoordinatesAtom, jwtAtom }

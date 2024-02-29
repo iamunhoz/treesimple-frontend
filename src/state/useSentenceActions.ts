@@ -56,7 +56,7 @@ export const useSentenceActions = () => {
     setCurrentSentence((prev) => ({
       id: prev.id,
       phrases: prev.phrases.map((phrase) =>
-        phrase.id === phraseId ? { ...phrase, type } : phrase
+        phrase.id === phraseId ? { ...phrase, phraseType: type } : phrase
       ),
     }))
   }
