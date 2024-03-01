@@ -13,5 +13,6 @@
 # chores
 
 - reorganizar branches agora que o processo do next acabou
+- testar se useSentenceActions está causando uma avalanche de renders
 
 # fixes

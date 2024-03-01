@@ -7,6 +7,7 @@ import { useSentenceActions } from "@/state/useSentenceActions"
 import { Box } from "@mui/material"
 import { Fragment, useState } from "react"
 import { PhrasePin } from ".."
+import { BtnRemoveChildPhrases } from "../BtnRemoveChildPhrases"
 
 type PhraseContainerProps = {
   phrase: Phrase
@@ -14,11 +15,11 @@ type PhraseContainerProps = {
 export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
   const { phrase } = props
   const { sendSplitToState } = useSentenceActions()
-  const [isBtnSplitterDisabled, setIsBtnSplitterDisabled] = useState(false)
+  const [isPhraseSplitted, setIsPhraseSplitted] = useState(false)
 
   const handleSplitPhraseHere = (idx: number) => {
     sendSplitToState(phrase, idx)
-    setIsBtnSplitterDisabled(true)
+    setIsPhraseSplitted(true)
   }
   return (
     <Box
@@ -52,12 +53,13 @@ export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
                 m: 0,
               }}
               onClick={() => handleSplitPhraseHere(idx)}
-              disabled={isBtnSplitterDisabled}
+              disabled={isPhraseSplitted}
             />
           )}
           <span>{word}</span>
         </Fragment>
       ))}
+      {isPhraseSplitted && <BtnRemoveChildPhrases phraseId={phrase.id} />}
     </Box>
   )
 }

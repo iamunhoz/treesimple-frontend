@@ -61,10 +61,10 @@ export type Coordinates = {
 
 export type Phrase = PlainPhrase & Coordinates
 
-export type PlainSentence = {
+/* export type PlainSentence = {
   id: string
   phrases: PlainPhrase[]
-}
+} */
 
 export type Sentence = {
   id: string
@@ -78,9 +78,9 @@ export interface LinesCoordinates {
   parentY: number
 }
 
-export type PlainTree = {
+/* export type PlainTree = {
   sentence: PlainSentence
-}
+} */
 
 export type TreeWithCoordinates = {
   sentence: Sentence

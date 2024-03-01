@@ -13,6 +13,35 @@ import {
   createRigthSideSplit,
 } from "@/lib/sentence"
 
+function loopAndRemoveAllChildrenAndGrandChildren(
+  phraseId: string,
+  phrases: Phrase[]
+) {
+  let phrasesWithoutRemovedChildPhrases: Phrase[] = []
+  const idsToRemove: string[] = []
+
+  function loop(pId: string) {
+    const foundChildrenWithThisParentId = phrases.filter(
+      (phrase) => phrase.parentId === pId
+    )
+
+    if (!!foundChildrenWithThisParentId.length) {
+      foundChildrenWithThisParentId.forEach((phrase) => {
+        idsToRemove.push(phrase.id)
+        loop(phrase.id)
+      })
+    } else {
+      phrasesWithoutRemovedChildPhrases = phrases.filter(
+        (phrase) => !idsToRemove.includes(phrase.id)
+      )
+    }
+  }
+
+  loop(phraseId)
+
+  return phrasesWithoutRemovedChildPhrases
+}
+
 export const useSentenceActions = () => {
   const [currentSentence, setCurrentSentence] = useAtom(currentSentenceAtom)
   const setDrawingLinesCoordinates = useSetAtom(drawingLinesCoordinatesAtom)
@@ -61,6 +90,22 @@ export const useSentenceActions = () => {
     }))
   }
 
+  const trimChildPhrases = (phraseId: string) => {
+    const phrasesWithoutOldChildPhrases =
+      loopAndRemoveAllChildrenAndGrandChildren(
+        phraseId,
+        currentSentence.phrases
+      )
+    console.log("phrasesWithoutOldChildPhrases", phrasesWithoutOldChildPhrases)
+
+    if (!phrasesWithoutOldChildPhrases) return
+
+    setCurrentSentence((prev) => ({
+      id: prev.id,
+      phrases: phrasesWithoutOldChildPhrases,
+    }))
+  }
+
   const resetAppState = () => {
     setCurrentSentence({
       id: "",
@@ -77,6 +122,7 @@ export const useSentenceActions = () => {
     addLinesCoordinates,
     sendSplitToState,
     setPhraseType,
+    trimChildPhrases,
     resetAppState,
   }
 }
