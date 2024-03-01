@@ -1,17 +1,20 @@
 import { useSentenceActions } from "@/state/useSentenceActions"
 import { Box, IconButton } from "@mui/material"
+import { Dispatch, SetStateAction } from "react"
 
 type BtnRemoveChildPhrasesProps = {
   phraseId: string
+  setIsPhraseSplitted: Dispatch<SetStateAction<boolean>>
 }
 export function BtnRemoveChildPhrases(
   props: BtnRemoveChildPhrasesProps
 ): JSX.Element {
-  const { phraseId } = props
+  const { phraseId, setIsPhraseSplitted } = props
   const { trimChildPhrases } = useSentenceActions()
 
   const handleClick = () => {
-    trimChildPhrases(phraseId)
+    trimChildPhrases({ firstParentId: phraseId })
+    setIsPhraseSplitted(false)
   }
 
   return (

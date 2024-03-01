@@ -76,6 +76,7 @@ export interface LinesCoordinates {
   y: number
   parentX: number
   parentY: number
+  phraseId: string
 }
 
 /* export type PlainTree = {

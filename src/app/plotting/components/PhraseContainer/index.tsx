@@ -17,8 +17,8 @@ export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
   const { sendSplitToState } = useSentenceActions()
   const [isPhraseSplitted, setIsPhraseSplitted] = useState(false)
 
-  const handleSplitPhraseHere = (idx: number) => {
-    sendSplitToState(phrase, idx)
+  const handleSplitPhraseHere = (splitterIdx: number) => {
+    sendSplitToState({ currentPhrase: phrase, splitterIdx })
     setIsPhraseSplitted(true)
   }
   return (
@@ -59,7 +59,12 @@ export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
           <span>{word}</span>
         </Fragment>
       ))}
-      {isPhraseSplitted && <BtnRemoveChildPhrases phraseId={phrase.id} />}
+      {isPhraseSplitted && (
+        <BtnRemoveChildPhrases
+          phraseId={phrase.id}
+          setIsPhraseSplitted={setIsPhraseSplitted}
+        />
+      )}
     </Box>
   )
 }

@@ -1,4 +1,4 @@
-import { useAtom, useSetAtom } from "jotai"
+import { useAtom } from "jotai"
 import { currentSentenceAtom, drawingLinesCoordinatesAtom } from "./atoms"
 import {
   LinesCoordinates,
@@ -15,10 +15,12 @@ import {
 
 function loopAndRemoveAllChildrenAndGrandChildren(
   phraseId: string,
-  phrases: Phrase[]
+  phrases: Phrase[],
+  linesCoordinates: LinesCoordinates[]
 ) {
-  let phrasesWithoutRemovedChildPhrases: Phrase[] = []
   const idsToRemove: string[] = []
+  let phrasesWithoutRemovedChildPhrases: Phrase[] = []
+  let linesWithoutRemovedChildLines: LinesCoordinates[] = []
 
   function loop(pId: string) {
     const foundChildrenWithThisParentId = phrases.filter(
@@ -34,17 +36,22 @@ function loopAndRemoveAllChildrenAndGrandChildren(
       phrasesWithoutRemovedChildPhrases = phrases.filter(
         (phrase) => !idsToRemove.includes(phrase.id)
       )
+      linesWithoutRemovedChildLines = linesCoordinates.filter(
+        (line) => !idsToRemove.includes(line.phraseId)
+      )
     }
   }
 
   loop(phraseId)
 
-  return phrasesWithoutRemovedChildPhrases
+  return { phrasesWithoutRemovedChildPhrases, linesWithoutRemovedChildLines }
 }
 
 export const useSentenceActions = () => {
   const [currentSentence, setCurrentSentence] = useAtom(currentSentenceAtom)
-  const setDrawingLinesCoordinates = useSetAtom(drawingLinesCoordinatesAtom)
+  const [drawingLinesCoordinates, setDrawingLinesCoordinates] = useAtom(
+    drawingLinesCoordinatesAtom
+  )
 
   const replaceCurrentSentence = (sentence: Sentence) => {
     setCurrentSentence(sentence)
@@ -61,7 +68,13 @@ export const useSentenceActions = () => {
     setDrawingLinesCoordinates((prev) => [...prev, ...lines])
   }
 
-  const sendSplitToState = (currentPhrase: Phrase, splitterIdx: number) => {
+  const sendSplitToState = ({
+    currentPhrase,
+    splitterIdx,
+  }: {
+    currentPhrase: Phrase
+    splitterIdx: number
+  }) => {
     const leftSide: Phrase = createLeftSideSplit(currentPhrase, splitterIdx)
     const rightSide: Phrase = createRigthSideSplit(
       currentPhrase,
@@ -71,10 +84,12 @@ export const useSentenceActions = () => {
     addPhrasesToCurrentSentence([leftSide, rightSide])
     addLinesCoordinates([
       {
+        phraseId: leftSide.id,
         ...calculateParentXYLinePosition(currentPhrase),
         ...calculateThisPhraseXYLinePosition(leftSide),
       },
       {
+        phraseId: rightSide.id,
         ...calculateParentXYLinePosition(currentPhrase),
         ...calculateThisPhraseXYLinePosition(rightSide),
       },
@@ -90,20 +105,22 @@ export const useSentenceActions = () => {
     }))
   }
 
-  const trimChildPhrases = (phraseId: string) => {
-    const phrasesWithoutOldChildPhrases =
+  const trimChildPhrases = ({ firstParentId }: { firstParentId: string }) => {
+    const { phrasesWithoutRemovedChildPhrases, linesWithoutRemovedChildLines } =
       loopAndRemoveAllChildrenAndGrandChildren(
-        phraseId,
-        currentSentence.phrases
+        firstParentId,
+        currentSentence.phrases,
+        drawingLinesCoordinates
       )
-    console.log("phrasesWithoutOldChildPhrases", phrasesWithoutOldChildPhrases)
 
-    if (!phrasesWithoutOldChildPhrases) return
+    if (!phrasesWithoutRemovedChildPhrases) return
 
     setCurrentSentence((prev) => ({
       id: prev.id,
-      phrases: phrasesWithoutOldChildPhrases,
+      phrases: phrasesWithoutRemovedChildPhrases,
     }))
+
+    setDrawingLinesCoordinates(linesWithoutRemovedChildLines)
   }
 
   const resetAppState = () => {
