@@ -17,8 +17,6 @@ import { KeyboardEventHandler, useState } from "react"
 import Link from "next/link"
 import { VerifiedUserOutlined } from "@mui/icons-material"
 
-//tesete
-
 export default function Signup(): JSX.Element {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")

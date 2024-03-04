@@ -1,13 +1,15 @@
 "use client"
 
-import { currentSentenceAtom, drawingLinesCoordinatesAtom } from "@/state/atoms"
 import { Box } from "@mui/material"
-import { useAtomValue } from "jotai"
 import { PhraseContainer } from "./components"
+import { useAppStore } from "@/state"
 
 export default function Plotting() {
-  const currentSentence = useAtomValue(currentSentenceAtom)
-  const drawingLinesCoordinates = useAtomValue(drawingLinesCoordinatesAtom)
+  const currentSentence = useAppStore(({ currentSentence }) => currentSentence)
+  const drawingLinesCoordinates = useAppStore(
+    ({ drawingLinesCoordinates }) => drawingLinesCoordinates
+  )
+
   return (
     <Box
       sx={{

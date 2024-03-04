@@ -2,7 +2,6 @@
 
 import { ApiPaths, ResponseStatus, post } from "@/lib/api"
 import { LoginDTO, LoginResponse } from "@/lib/definitions"
-import { jwtAtom } from "@/state/atoms"
 import {
   Alert,
   Box,
@@ -13,20 +12,19 @@ import {
   Typography,
 } from "@mui/material"
 import { useMutation } from "@tanstack/react-query"
-import { useSetAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import { KeyboardEventHandler, useState } from "react"
 import { NoAccountsOutlined } from "@mui/icons-material"
 import { jwtDecode } from "jwt-decode"
 import Link from "next/link"
+import { useAppStore } from "@/state"
 
 export default function Login(): JSX.Element {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [userNotFound, setUserNotFound] = useState(false)
   const router = useRouter()
-
-  const setJwt = useSetAtom(jwtAtom)
+  const setJwt = useAppStore(({ setJwt }) => setJwt)
 
   const { mutate, isPending } = useMutation({
     mutationKey: [ApiPaths.login],

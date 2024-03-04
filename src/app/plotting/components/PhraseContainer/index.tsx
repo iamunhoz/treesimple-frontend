@@ -3,23 +3,27 @@
 import { Phrase } from "@/lib/definitions"
 import { PHRASE_BODY_HEIGHT } from "@/lib/sentence"
 import { getWidthFromCharLength } from "@/lib/strings"
-import { useSentenceActions } from "@/state/useSentenceActions"
 import { Box } from "@mui/material"
 import { Fragment, useState } from "react"
 import { PhrasePin } from ".."
 import { BtnRemoveChildPhrases } from "../BtnRemoveChildPhrases"
+import { useAppStore } from "@/state"
 
 type PhraseContainerProps = {
   phrase: Phrase
 }
 export function PhraseContainer(props: PhraseContainerProps): JSX.Element {
   const { phrase } = props
-  const { sendSplitToState } = useSentenceActions()
+
+  const sendSplitToState = useAppStore(
+    ({ sendSplitToState }) => sendSplitToState
+  )
+
   const [isPhraseSplitted, setIsPhraseSplitted] = useState(false)
 
   const handleSplitPhraseHere = (splitterIdx: number) => {
-    sendSplitToState({ currentPhrase: phrase, splitterIdx })
     setIsPhraseSplitted(true)
+    sendSplitToState({ currentPhrase: phrase, splitterIdx })
   }
   return (
     <Box

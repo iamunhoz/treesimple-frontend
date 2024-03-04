@@ -1,4 +1,4 @@
-import { useSentenceActions } from "@/state/useSentenceActions"
+import { useAppStore } from "@/state"
 import { Box, IconButton } from "@mui/material"
 import { Dispatch, SetStateAction } from "react"
 
@@ -10,7 +10,9 @@ export function BtnRemoveChildPhrases(
   props: BtnRemoveChildPhrasesProps
 ): JSX.Element {
   const { phraseId, setIsPhraseSplitted } = props
-  const { trimChildPhrases } = useSentenceActions()
+  const trimChildPhrases = useAppStore(
+    ({ trimChildPhrases }) => trimChildPhrases
+  )
 
   const handleClick = () => {
     trimChildPhrases({ firstParentId: phraseId })

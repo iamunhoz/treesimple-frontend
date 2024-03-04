@@ -1,17 +1,12 @@
 "use client"
 
 import { Box } from "@mui/material"
-import {
-  BtnBackToSentenceInput,
-  BtnSaveSentence,
-  JotaiDevTools,
-} from "../components"
+import { BtnBackToSentenceInput, BtnSaveSentence } from "../components"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { queryClient } from "@/lib/api"
 import { useRouter } from "next/navigation"
-import { useAtomValue } from "jotai"
-import { currentSentenceAtom } from "@/state/atoms"
 import { useEffect } from "react"
+import { useAppStore } from "@/state"
 
 export default function PlottingLayout({
   children,
@@ -19,7 +14,7 @@ export default function PlottingLayout({
   children: React.ReactNode
 }>) {
   const router = useRouter()
-  const currentSentence = useAtomValue(currentSentenceAtom)
+  const currentSentence = useAppStore(({ currentSentence }) => currentSentence)
 
   useEffect(() => {
     if (
@@ -51,7 +46,6 @@ export default function PlottingLayout({
           <BtnSaveSentence />
         </QueryClientProvider>
       </Box>
-      <JotaiDevTools />
     </Box>
   )
 }

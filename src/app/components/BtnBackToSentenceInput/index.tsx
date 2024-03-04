@@ -1,11 +1,11 @@
 "use client"
 
-import { useSentenceActions } from "@/state/useSentenceActions"
+import { useAppStore } from "@/state"
 import { Button } from "@mui/material"
 import Link from "next/link"
 
 export function BtnBackToSentenceInput(): JSX.Element {
-  const { resetAppState } = useSentenceActions()
+  const resetAppState = useAppStore(({ resetAppState }) => resetAppState)
 
   return (
     <Button

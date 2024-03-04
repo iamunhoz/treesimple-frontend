@@ -2,7 +2,7 @@
 
 import { Phrase } from "@/lib/definitions"
 import { PHRASE_TYPES_LIST } from "@/lib/sentence"
-import { useSentenceActions } from "@/state/useSentenceActions"
+import { useAppStore } from "@/state"
 import { Box, Button, IconButton, List, ListItem, Popover } from "@mui/material"
 import { useState } from "react"
 
@@ -12,7 +12,7 @@ type PhrasePinProps = {
 export function PhrasePin(props: PhrasePinProps): JSX.Element {
   const { phrase } = props
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
-  const { setPhraseType } = useSentenceActions()
+  const setPhraseType = useAppStore(({ setPhraseType }) => setPhraseType)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)

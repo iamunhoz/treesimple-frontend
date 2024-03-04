@@ -1,6 +1,6 @@
-import { PlainSentence, SentenceDTO } from "@/lib/definitions"
+import { SentenceDTO } from "@/lib/definitions"
 import { convertSentenceDtoToTreeWithCoordinates } from "@/lib/sentence"
-import { useSentenceActions } from "@/state/useSentenceActions"
+import { useAppStore } from "@/state"
 import { Button, Card, Typography } from "@mui/material"
 import { useRouter } from "next/navigation"
 
@@ -11,8 +11,13 @@ export function CardSentenceSelector(
   props: CardSentenceSelectorProps
 ): JSX.Element {
   const { sentence } = props
+  const [replaceCurrentSentence, addLinesCoordinates] = useAppStore(
+    ({ replaceCurrentSentence, addLinesCoordinates }) => [
+      replaceCurrentSentence,
+      addLinesCoordinates,
+    ]
+  )
 
-  const { replaceCurrentSentence, addLinesCoordinates } = useSentenceActions()
   const router = useRouter()
 
   const loadSentence = () => {

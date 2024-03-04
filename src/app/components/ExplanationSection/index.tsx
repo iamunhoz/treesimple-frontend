@@ -1,5 +1,5 @@
 import { ApiPaths, ResponseStatus, get } from "@/lib/api"
-import { GetSentenceResponse, PlainSentence } from "@/lib/definitions"
+import { GetSentenceResponse } from "@/lib/definitions"
 import { Box } from "@mui/material"
 import { useQuery } from "@tanstack/react-query"
 import { CardSentenceSelector } from "../CardSentenceSelector"

@@ -1,13 +1,13 @@
 "use client"
 
 import { isLoggedInFn } from "@/lib/system"
-import { jwtAtom } from "@/state/atoms"
+import { useAppStore } from "@/state"
 import { Box, BoxProps, Button, IconButton } from "@mui/material"
-import { useAtomValue } from "jotai"
 import Link from "next/link"
 
 export function UserMenu(props: BoxProps): JSX.Element {
-  const jwt = useAtomValue(jwtAtom)
+  const jwt = useAppStore(({ jwt }) => jwt)
+
   const isLoggedIn = isLoggedInFn(jwt)
   return (
     <Box

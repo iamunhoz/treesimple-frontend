@@ -3,11 +3,11 @@
 import { nanoid } from "nanoid"
 import {
   Coordinates,
+  LinesCoordinates,
   Phrase,
   PhraseType,
   PhraseTypeCode,
   PhraseTypeShortCode,
-  PlainSentence,
   Sentence,
   SentenceDTO,
   TreeWithCoordinates,
@@ -162,6 +162,7 @@ function generateLinesFromPositionedPhrases(
     if (!parentPhrase) return
 
     lines.push({
+      phraseId: phrase.id, // NOT SURE
       ...calculateParentXYLinePosition(parentPhrase),
       ...calculateThisPhraseXYLinePosition(phrase),
     })
@@ -282,4 +283,38 @@ function convertPhraseTypeCodeToPhraseType(
   return PHRASE_TYPES_LIST.find(
     (phraseType) => phraseType.code === phraseTypeCode
   )
+}
+
+export function loopAndRemoveAllChildrenAndGrandChildren(
+  phraseId: string,
+  phrases: Phrase[],
+  linesCoordinates: LinesCoordinates[]
+) {
+  const idsToRemove: string[] = []
+  let phrasesWithoutRemovedChildPhrases: Phrase[] = []
+  let linesWithoutRemovedChildLines: LinesCoordinates[] = []
+
+  function loop(pId: string) {
+    const foundChildrenWithThisParentId = phrases.filter(
+      (phrase) => phrase.parentId === pId
+    )
+
+    if (!!foundChildrenWithThisParentId.length) {
+      foundChildrenWithThisParentId.forEach((phrase) => {
+        idsToRemove.push(phrase.id)
+        loop(phrase.id)
+      })
+    } else {
+      phrasesWithoutRemovedChildPhrases = phrases.filter(
+        (phrase) => !idsToRemove.includes(phrase.id)
+      )
+      linesWithoutRemovedChildLines = linesCoordinates.filter(
+        (line) => !idsToRemove.includes(line.phraseId)
+      )
+    }
+  }
+
+  loop(phraseId)
+
+  return { phrasesWithoutRemovedChildPhrases, linesWithoutRemovedChildLines }
 }

@@ -3,13 +3,13 @@
 import { ApiPaths, ResponseStatus, post } from "@/lib/api"
 import { Sentence, SentenceDTO, SentenceResponse } from "@/lib/definitions"
 import { convertSentenceWithCoordinatesToSentenceDTO } from "@/lib/sentence"
-import { currentSentenceAtom } from "@/state/atoms"
+import { useAppStore } from "@/state"
 import { Button } from "@mui/material"
 import { useMutation } from "@tanstack/react-query"
-import { useAtomValue } from "jotai"
 
 export function BtnSaveSentence() {
-  const sentence = useAtomValue(currentSentenceAtom)
+  const sentence = useAppStore(({ currentSentence }) => currentSentence)
+
   const { mutate, isPending } = useMutation({
     mutationKey: [ApiPaths.sentence],
     mutationFn: async (sentence: Sentence) => {
@@ -47,13 +47,3 @@ export function BtnSaveSentence() {
     </Button>
   )
 }
-
-/* function BtnSaveSentenceQueryContainer(props: {
-  children: React.ReactNode
-}): JSX.Element {
-  return (
-    <QueryClientProvider client={queryClient}>
-      {props.children}
-    </QueryClientProvider>
-  )
-} */
