@@ -1,38 +1,63 @@
-import { useEffect, useRef, useState } from 'react'
-import { TPhrase } from 'types/PhraseTypes'
-import { PhraseTypePin, PhraseBody } from './components'
-import usePhraseLogic from './components/usePhraseLogic'
+"use client"
 
-type PhraseProps = {
-  phrase: TPhrase
-}
+import { useState } from "react";
 
-export function Phrase(props: PhraseProps): JSX.Element {
-  const { phrase } = props
-  const { parentId, type, body } = phrase
-  const words = body.split(' ')
+export function Phrase() {
+  const [phraseTop, setPhraseTop] = useState(50);
+  const [phraseLeft, setPhraseLeft] = useState(50);
+ const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
-  const ref = useRef<HTMLDivElement>(null)
-  const [firstRun, setFirstRun] = useState(true)
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    e.dataTransfer.effectAllowed = 'move';
+      // Calculate offset from top-left corner of the dragged element
+    const rect = e.currentTarget.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const offsetY = e.clientY - rect.top;
+    setDragOffset({ x: offsetX, y: offsetY });
+  };
 
-  const { splitHere, setPosition, setTopAnchor } = usePhraseLogic({
-    phrase,
-    ref
-  })
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';    
+  };
 
-  useEffect(() => {
-    if (!ref || !ref.current || !firstRun) return
-    setTopAnchor()
-    setFirstRun(false)
-  }, [firstRun, setTopAnchor])
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left - dragOffset.x;
+    const y = e.clientY - rect.top - dragOffset.y;
+
+    setPhraseTop(y);
+    setPhraseLeft(x);
+    
+    console.log('Drop coordinates:', { x, y });
+  };
+
   return (
-    <div
-      ref={ref}
-      className={`absolute w-fit ${!parentId ? '-translate-x-1/2' : ''}`}
-      style={setPosition()}
-    >
-      <PhraseTypePin type={type} />
-      <PhraseBody words={words} splitHere={splitHere} />
+    <div className="h-[80svh] w-[90svw] relative border rounded-2xl m-8 p-8">
+      {/* Draggable element */}
+      <div 
+        className="border-2 absolute rounded-2xl p-2 z-10 flex w-fit cursor-move bg-blue-100"
+        style={{
+          top: `${phraseTop}px`,
+          left: `${phraseLeft}px`
+        }}
+        draggable={true}
+        onDragStart={handleDragStart}
+      >
+        Phrase Phrase
+      </div>
+      
+      {/* Drop zone - covers the entire container */}
+      <div 
+        className="absolute inset-0 border-2 border-dashed border-gray-400 rounded-2xl bg-gray-50 bg-opacity-30"
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
+        <div className="p-4 text-gray-600">
+          Drop anywhere to position the phrase
+        </div>
+      </div>
     </div>
-  )
+  );
 }
